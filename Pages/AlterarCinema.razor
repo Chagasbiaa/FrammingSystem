@@ -1,4 +1,13 @@
-@page "/AlterarCinema"
+@page "/AlterarCinema/{cinemaid}"
+@using System;
+@using Newtonsoft.Json;
+@using System.Net.Http;
+@using System.Text;
+@using System.Threading.Tasks;
+
+@inject IHttpClientFactory ClientFactory
+
+<PageTitle>Counter</PageTitle>
 
 <div class="container_pesquisa">
   <button id="button_home">
@@ -65,9 +74,11 @@
     <div class="container_main">
       <div class="codigo_cinema">
         <img id="foto_codigo_func" src="~/Content/images/icon_identifica_func.png" />
-        <p id="cod_cinema_p">Localidade: @Input.Localidade</p>
-        <p id="cod_nome_p">Nome: @Input.Nome</p>
-        <p id="cod_email_p">Salas: @Input.NumSala</p>
+        <p id="cod_cinema_p">Localidade: @Input.enderecoCinema</p>
+        <p id="cod_nome_p">Nome: @Input.nomeCinema</p>
+        <p id="cod_email_p">Salas: @Input.qtdSala</p>
+         <p id="cod_codigo_p">Código: @Input.tokenCinema</p>
+        
 
       </div>
 
@@ -76,18 +87,23 @@
 
       <p id="codigo_func_p">Localidade:</p>
       <p id="codigo_func_result"></p>
-      <input @bind="@Input.Localidade" id="codigo_func"  type="text" placeholder="Av. Guimarães, N°12">
+      <input @bind="@Input.enderecoCinema" id="codigo_func"  type="text" placeholder="Av. Guimarães, N°12">
       <img id="codigo_func_img" src="~/Content/images/icon_local.png" width="35px" />
 
       <p id="codigo_nome_p">Nome:</p>
       <p id="codigo_nome_result"></p>
-      <input @bind="@Input.Nome"id="nome_func" type="text" placeholder="Uci Cinemas" />
+      <input @bind="@Input.nomeCinema"id="nome_func" type="text" placeholder="Uci Cinemas" />
       <img id="nome_func_img" src="~/Content/images/icon_theater.png" width="35px" />
 
       <p id="codigo_email_p">Número de Salas :</p>
       <p id="codigo_email_result"></p>
-      <input @bind="@Input.NumSala"id="email_func" type="text" placeholder="10" />
+      <input @bind="@Input.qtdSala"id="email_func" type="text" placeholder="10" />
       <img id="email_func_img" src="~/Content/images/icon_numsalas.png" width="35px" />
+
+      <p id="codigo_senha_p">Código Cinema:</p>
+      <p id="codigo_senha_result"></p>
+      <input @bind="@Input.tokenCinema" id="senha_func" type="text" disabled/>
+      <img id="senha_func_img" src="~/Content/images/icon_chave.png" width="35px">
 
 
       <input type="file" id="fileInput" style="display: none;" accept="image/*" />
@@ -95,18 +111,61 @@
         <img src="~/Content/images/foto_cadastro_func.png" id="imagePreview" />
       </button>
 
-      <button onclick="atualizarDiv()" id="cadastre_func">Alterar</button>
+      <button @onclick="Update" id="cadastre_func">Alterar</button>
     </div>
   </div>
 </div>
+
 
 @code{
 
    public inputModel Input {get; set;} = new();
     public class inputModel{
-    public string Localidade;
-    public string Nome;
-    public string NumSala;
- 
+    public string enderecoCinema;
+    public string nomeCinema;
+
+    public string qtdSala;
+    public string tokenCinema;
+   
+
   }
+  [Parameter]
+   public string cinemaid { get; set;}
+
+    protected override async Task OnInitializedAsync()
+    {
+
+    var client = ClientFactory.CreateClient();
+    HttpResponseMessage response = await client.GetAsync($"https://framming-api.onrender.com/cinema/{cinemaid}");
+    response.EnsureSuccessStatusCode();
+    string responseBody = await response.Content.ReadAsStringAsync();
+
+    Input = JsonConvert.DeserializeObject<inputModel>(responseBody);
+    }
+
+   public async Task Update(){
+      Console.WriteLine("Test");
+      var client = ClientFactory.CreateClient();
+
+      
+        using StringContent jsonContent = new(
+           JsonConvert.SerializeObject(new
+            {
+                addressCinema = Input.enderecoCinema,
+                nameCinema = Input.nomeCinema,
+                numRooms = int.Parse(Input.qtdSala),
+                codCinema = (Input.tokenCinema),
+            
+            }),
+            Encoding.UTF8,
+            "application/json");
+              
+
+        Console.WriteLine($"teste => {jsonContent}");
+
+         var response = await client.PostAsync("https://framming-api.onrender.com/cinema", jsonContent);
+      
+        var errorMessage = await response.Content.ReadAsStringAsync();
+        Console.WriteLine($"Error: {errorMessage}");
+}
 }

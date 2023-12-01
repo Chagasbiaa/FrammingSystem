@@ -1,0 +1,139 @@
+@page "/ListaCinemas"
+@using Newtonsoft.Json;
+@using System;
+@using System.Net.Http;
+@using System.Text;
+@using System.Text.Json;
+@using System.Threading.Tasks;
+
+@inject IHttpClientFactory ClientFactory
+
+
+
+<div class="container_pesquisa">
+    <button id="button_home">
+        <a href="ferqyfq.html">
+            <img src="~/Content/images/icon_home.png">
+        </a>
+    </button>
+
+    <button id="button_notificacao">
+        <a href="ferqyfq.html">
+            <img src="~/Content/images/icon_notificacao.png">
+        </a>
+
+    </button>
+
+    <div id="div_identificacao">
+        <img src="~/Content/images/Chagasperfil.png">
+        <p>Beatriz Chagas</p>
+        <div id="div_indifica_role">
+            <p>Linda</p>
+        </div>
+    </div>
+
+    <div id="divBusca">
+        <input type="text" id="txtBusca" img src="~/Content/images/lupapesquisa.png">
+        <img id="imgBusca" src="~/Content/images/lupapesquisa.png" width="30px" alt="Buscar">
+    </div>
+</div>
+
+<div class="container_menu_content">
+    <div class="container_menu">
+        <nav class="menu">
+            <img id="framming_logo_menu" src="~/Content/images/framminglogo.png" />
+            <ul>
+                <div class="menu_container">
+                    <button id="button_cliente_menu">
+                        <li><a href="cad_func"><img src="~/Content/images/icon_cliente.png"></a></li>
+                    </button>
+                    <button id="button_mensagens_menu">
+                        <li><a href="Verpostadm"><img src="~/Content/images/icon_mensagens.png"></a></li>
+                    </button>
+                    <button id="button_identificacao_menu">
+                        <li><a href="#"><img src="~/Content/images/icon_identificacao.png"></a></li>
+                    </button>
+                    <button id="button_theater_menu">
+                        <li><a href="Cad_cinema"><img src="~/Content/images/theater.png"></a></li>
+                    </button>
+                </div>
+            </ul>
+            <ul>
+                <div class="buttons_sair_configuracao">
+                    <button id="button_sair_menu">
+                        <li><a href="#"><img src="~/Content/images/icon_saida.png"></a></li>
+                    </button>
+                    <button id="button_configuracao_menu">
+                        <li><a href="#"><img src="~/Content/images/configuracao.png"></a></li>
+                    </button>
+                </div>
+            </ul>
+        </nav>
+    </div>
+
+</div>
+
+<div class="container_content">
+    <div class="container_main">
+        <a href="/CadCinema" class="cadastrar_novo_cinema">Cadastrar novo Cinema</a>
+        <center>
+            <div class="rotulos_usuarios">
+                <p class="beatriz">Nome</p>
+                <p class="beatriz">Salas</p>
+                <p class="beatriz">Código</p>
+                <div class="gap"></div>
+            </div>
+
+            <div class="inner-div">
+                @foreach(var cinema in Cinemas){
+                    <div class="lista_usuarios">
+                    <p class="nome_usuario_nome">@cinema.nomeCinema</p>
+                    <p class="nome_usuario_nick">@cinema.qtdSala</p>
+                    <p class="nome_usuario_email" data-id="${idUsuario}">@cinema.tokenCinema</p>
+                    <button class="excluir_usu" @onclick="()=>DeleteCinema(cinema.tokenCinema)">X</button>
+                    <a href ="/AlterarCinema/@cinema.tokenCinema">edit</a>
+                </div>
+
+                <div class="line-users"></div>
+                
+                }
+               
+            </div>
+
+        </center>
+    </div>
+
+
+
+</div>
+@code {
+
+    public List<CinemaModel> Cinemas  { get; set; } = new();
+    public class CinemaModel 
+    {
+        public string enderecoCinema;
+        public string nomeCinema;
+        public int qtdSala;
+        public string tokenCinema;
+        public string idCinema;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+
+    var client = ClientFactory.CreateClient();
+    HttpResponseMessage response = await client.GetAsync("https://framming-api.onrender.com/cinema");
+    response.EnsureSuccessStatusCode();
+    string responseBody = await response.Content.ReadAsStringAsync();
+
+    Cinemas = JsonConvert.DeserializeObject<List<CinemaModel>>(responseBody);
+    }
+    public async Task DeleteCinema(string id){
+        var client = ClientFactory.CreateClient();
+       var response = await client.PostAsync($"https://framming-api.onrender.com/deleteCinema/{id}",null);
+      
+        var errorMessage = await response.Content.ReadAsStringAsync();
+        Console.WriteLine($"Error: {errorMessage}");
+        Cinemas.RemoveAll(cinema => cinema.tokenCinema == id);
+    }
+}
