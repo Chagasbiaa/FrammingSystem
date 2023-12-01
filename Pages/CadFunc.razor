@@ -109,6 +109,10 @@
 
 
 @code{
+
+    public string Erro ="";
+    public string Sucesso ="";
+
   public RegisterFuncionario Input {get; set;} = new();
 
   public class RegisterFuncionario{
@@ -122,18 +126,12 @@
       Console.WriteLine("Test");
       var client = ClientFactory.CreateClient();
 
-      var values = new Dictionary<string, string>
-      {
-          { "nome",  Input.Nome},
-          { "username",  Input.Nome},
-          { "email",  Input.Email},
-          { "password",  Input.Senha},
-          { "userType",  "fun"},
-      };
+      
         using StringContent jsonContent = new(
             JsonSerializer.Serialize(new
             {
-                nome = Input.Nome,
+                codCinema = Input.Codigo,
+                name = Input.Nome,
                 username = Input.Nome,
                 email = Input.Email,
                 password = Input.Senha,
@@ -142,15 +140,18 @@
             Encoding.UTF8,
             "application/json");
 
-        var content = new FormUrlEncodedContent(values);
+      
 
         Console.WriteLine($"teste => {jsonContent}");
 
+       
        var response = await client.PostAsync("https://framming-api.onrender.com/users/register", jsonContent);
-
+      
         var errorMessage = await response.Content.ReadAsStringAsync();
         Console.WriteLine($"Error: {errorMessage}");
 
   }
 
 }
+
+

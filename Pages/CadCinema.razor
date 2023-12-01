@@ -1,4 +1,14 @@
-@page "/AlterarCinema"
+@page "/CadCinema"
+@using System;
+@using System.Net.Http;
+@using System.Text;
+@using System.Text.Json;
+@using System.Threading.Tasks;
+
+@inject IHttpClientFactory ClientFactory
+
+<PageTitle>Counter</PageTitle>
+
 
 <div class="container_pesquisa">
   <button id="button_home">
@@ -68,15 +78,16 @@
         <p id="cod_cinema_p">Localidade: @Input.Localidade</p>
         <p id="cod_nome_p">Nome: @Input.Nome</p>
         <p id="cod_email_p">Salas: @Input.NumSala</p>
+         <p id="cod_senha_p">Código do cinema:@Input.Codigocine</p>
 
       </div>
 
-      <p id="codigo_cadastro_func_p">Alterar cinema</p>
+      <p id="codigo_cadastro_func_p">Cadastrar cinema</p>
 
 
       <p id="codigo_func_p">Localidade:</p>
       <p id="codigo_func_result"></p>
-      <input @bind="@Input.Localidade" id="codigo_func"  type="text" placeholder="Av. Guimarães, N°12">
+      <input @bind="@Input.Localidade" id="localidade_func"  type="text" placeholder="Av. Guimarães, N°12">
       <img id="codigo_func_img" src="~/Content/images/icon_local.png" width="35px" />
 
       <p id="codigo_nome_p">Nome:</p>
@@ -86,8 +97,13 @@
 
       <p id="codigo_email_p">Número de Salas :</p>
       <p id="codigo_email_result"></p>
-      <input @bind="@Input.NumSala"id="email_func" type="text" placeholder="10" />
+      <input @bind="@Input.NumSala"id="NumSala_func" type="text" placeholder="10" />
       <img id="email_func_img" src="~/Content/images/icon_numsalas.png" width="35px" />
+
+      <p id="codigo_senha_p">Senha:</p>
+      <p id="codigo_senha_result"></p>
+      <input @bind="@Input.Codigocine" id="CodigoCine_func" type="text" placeholder="*******" />
+      <img id="senha_func_img" src="~/Content/images/icon_chave.png" width="35px">
 
 
       <input type="file" id="fileInput" style="display: none;" accept="image/*" />
@@ -95,7 +111,7 @@
         <img src="~/Content/images/foto_cadastro_func.png" id="imagePreview" />
       </button>
 
-      <button onclick="atualizarDiv()" id="cadastre_func">Alterar</button>
+      <button onclick="atualizarDiv()" id="cadastre_func">Cadastrar</button>
     </div>
   </div>
 </div>
@@ -107,6 +123,38 @@
     public string Localidade;
     public string Nome;
     public string NumSala;
+    public string Codigocine;
  
+
+  public async Task Submit(){
+      Console.WriteLine("Test");
+      var client = ClientFactory.CreateClient();
+
+      
+        using StringContent jsonContent = new(
+            JsonSerializer.Serialize(new
+            {
+                addressCinema = Input.Localidade,
+                nameCinema = Input.Nome,
+                numRooms = Input.NumSala,
+                codCinema = Input.Codigocine,
+            
+            }),
+            Encoding.UTF8,
+            "application/json");
+
+      
+
+        Console.WriteLine($"teste => {jsonContent}");
+
+       
+       var response = await client.PostAsync("https://framming-api.onrender.com/cinema", jsonContent);
+      
+        var errorMessage = await response.Content.ReadAsStringAsync();
+        Console.WriteLine($"Error: {errorMessage}");
+
   }
+
 }
+}
+
