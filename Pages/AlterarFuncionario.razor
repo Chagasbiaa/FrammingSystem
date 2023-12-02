@@ -12,7 +12,7 @@
 <div class="container_pesquisa">
   <button id="button_home">
     <a href="ferqyfq.html">
-      <img src="~/Content/images/icon_home.png">
+      <img src="~/images/icon_home.png">
     </a>
   </button>
 
@@ -74,9 +74,9 @@
     <div class="container_main">
       <div class="codigo_cinema">
         <img id="foto_codigo_func" src="~/Content/images/icon_identifica_func.png" />
-        <p id="cod_cinema_p">Localidade: @Input.nomeUsuario</p>
-        <p id="cod_nome_p">Nome: @Input.emailUsuario</p>
-        <p id="cod_email_p">Email: @Input.senhaUsuario</p>
+        <p id="cod_cinema_p">Nome: @Input.nomeUsuario</p>
+        <p id="cod_nome_p">Email: @Input.emailUsuario</p>
+        <p id="cod_email_p">Senha: **********</p>
          <p id="cod_codigo_p">Código: @Input.tokenCinema</p>
         
 
@@ -87,17 +87,17 @@
 
       <p id="codigo_func_p">Nome:</p>
       <p id="codigo_func_result"></p>
-      <input @bind="@Input.nomeUsuario" id="codigo_func"  type="text" placeholder="Av. Guimarães, N°12">
+      <input @bind="@Input.nomeUsuario" id="codigo_func"  type="text" >
       <img id="codigo_func_img" src="~/Content/images/icon_local.png" width="35px" />
 
       <p id="codigo_nome_p">Email:</p>
       <p id="codigo_nome_result"></p>
-      <input @bind="@Input.emailUsuario"id="nome_func" type="text" placeholder="Uci Cinemas" />
+      <input @bind="@Input.emailUsuario"id="nome_func" type="text" />
       <img id="nome_func_img" src="~/Content/images/icon_theater.png" width="35px" />
 
       <p id="codigo_email_p">Senha</p>
       <p id="codigo_email_result"></p>
-      <input @bind="@Input.senhaUsuario"id="email_func" type="password" placeholder="10" />
+      <input id="email_func" type="password" placeholder="***********"/>
       <img id="email_func_img" src="~/Content/images/icon_numsalas.png" width="35px" />
 
       <p id="codigo_senha_p">Código Cinema:</p>
@@ -135,36 +135,40 @@
     {
 
     var client = ClientFactory.CreateClient();
-    HttpResponseMessage response = await client.GetAsync($"https://framming-api.onrender.com/updateUsers/{idUsuario}");
+    HttpResponseMessage response = await client.GetAsync($"https://framming-api.onrender.com/users/{idUsuario}");
     response.EnsureSuccessStatusCode();
     string responseBody = await response.Content.ReadAsStringAsync();
 
     Input = JsonConvert.DeserializeObject<inputModel>(responseBody);
     }
 
-   public async Task Update(){
-      Console.WriteLine("Test");
-      var client = ClientFactory.CreateClient();
+  public async Task Update(){
+ Console.WriteLine("Test");
+ var client = ClientFactory.CreateClient();
 
-      
-        using StringContent jsonContent = new(
-           JsonConvert.SerializeObject(new
-            {
-              
-                name = Input.nomeUsuario,
-                email = Input.emailUsuario,
-               
-            
-            }),
-            Encoding.UTF8,
-            "application/json");
-              
+ using StringContent jsonContent = new(
+     JsonConvert.SerializeObject(new
+     {
+         name = Input.nomeUsuario,
+         username = Input.nomeUsuario, // substitua por um campo adequado se necessário
+         email = Input.emailUsuario,
+         password = Input.senhaUsuario,
+     }),
+     Encoding.UTF8,
+     "application/json");
 
-        Console.WriteLine($"teste => {jsonContent}");
+ Console.WriteLine($"teste => {jsonContent}");
 
-         var response = await client.PostAsync("https://framming-api.onrender.com/updateUsers", jsonContent);
-      
-        var errorMessage = await response.Content.ReadAsStringAsync();
-        Console.WriteLine($"Error: {errorMessage}");
+ var response = await client.PostAsync($"https://framming-api.onrender.com/updateUsers/{idUsuario}", jsonContent);
+
+ if (response.IsSuccessStatusCode)
+ {
+     Console.WriteLine("User updated successfully");
+ }
+ else
+ {
+     var errorMessage = await response.Content.ReadAsStringAsync();
+     Console.WriteLine($"Error: {errorMessage}");
+ }
 }
 }

@@ -1,0 +1,162 @@
+@page "/ListaUsuarios"
+@using Newtonsoft.Json;
+@using System;
+@using System.Net.Http;
+@using System.Text;
+@using System.Text.Json;
+@using System.Threading.Tasks;
+
+@inject IHttpClientFactory ClientFactory
+
+
+
+<div class="container_pesquisa">
+    <button id="button_home">
+        <a href="ferqyfq.html">
+           <img src="~/images/icon_notificacao.png" alt="Notificação">
+        </a>
+    </button>
+
+    <button id="button_notificacao">
+        <a href="ferqyfq.html">
+            <img src="~/images/icon_notificacao.png">
+        </a>
+
+    </button>
+
+    <div id="div_identificacao">
+        <img src="~/images/Chagasperfil.png">
+        <p>Beatriz Chagas</p>
+        <div id="div_indifica_role">
+            <p>Linda</p>
+        </div>
+    </div>
+
+    <div id="divBusca">
+       <input type="text" id="txtBusca" @bind="SearchString" @bind:event="oninput">
+        <img id="imgBusca" src="~/images/lupapesquisa.png" width="30px" alt="Buscar">
+    </div>
+</div>
+
+<div class="container_menu_content">
+    <div class="container_menu">
+        <nav class="menu">
+            <img id="framming_logo_menu" src="~/Content/images/framminglogo.png" />
+            <ul>
+                <div class="menu_container">
+                    <button id="button_cliente_menu">
+                        <li><a href="cad_func"><img src="~/Content/images/icon_cliente.png"></a></li>
+                    </button>
+                    <button id="button_mensagens_menu">
+                        <li><a href="Verpostadm"><img src="~/Content/images/icon_mensagens.png"></a></li>
+                    </button>
+                    <button id="button_identificacao_menu">
+                        <li><a href="#"><img src="~/Content/images/icon_identificacao.png"></a></li>
+                    </button>
+                    <button id="button_theater_menu">
+                        <li><a href="Cad_cinema"><img src="~/Content/images/theater.png"></a></li>
+                    </button>
+                </div>
+            </ul>
+            <ul>
+                <div class="buttons_sair_configuracao">
+                    <button id="button_sair_menu">
+                        <li><a href="#"><img src="~/Content/images/icon_saida.png"></a></li>
+                    </button>
+                    <button id="button_configuracao_menu">
+                        <li><a href="#"><img src="~/Content/images/configuracao.png"></a></li>
+                    </button>
+                </div>
+            </ul>
+        </nav>
+    </div>
+
+</div>
+
+<div class="container_content">
+    <div class="container_main">
+        <a href="/CadCinema" class="cadastrar_novo_cinema">Cadastrar novo Cinema</a>
+        <center>
+            <div class="rotulos_usuarios">
+                <p class="beatriz">Nome</p>
+                <p class="beatriz">Localização</p>
+                <p class="beatriz">Código</p>
+                <div class="gap"></div>
+            </div>
+
+            <div class="inner-div">
+                @foreach(var user in FilteredUsers){
+                    <div class="lista_usuarios">
+                    <p class="nome_usuario_nome">@user.nomeUsuario</p>
+                    <p class="nome_usuario_nick">@user.emailUsuario</p>
+                    <p class="nome_usuario_email" data-id="${idUsuario}">@user.tokenCinema</p>
+                    <button class="excluir_usu" @onclick="()=>DeleteUser(user.idUsuario)">X</button>
+                    <a href ="/AlterarFuncionario/@user.idUsuario">edit</a>
+                </div>
+
+                <div class="line-users"></div>
+                
+                }
+               
+            </div>
+
+        </center>
+    </div>
+
+
+
+</div>
+@code {
+    private string SearchString { get; set; }
+    public List<FuncModel> Users  { get; set; } = new();
+    public class FuncModel 
+    {
+        public string idUsuario;
+        public string emailUsuario;
+        public string nomeUsuario;
+        public string senhaUsuario;
+        public string tokenCinema;
+
+        public string tipoUsuario;
+    }
+
+   protected override async Task OnInitializedAsync()
+{
+  var client = ClientFactory.CreateClient();
+  HttpResponseMessage response = await client.GetAsync("https://framming-api.onrender.com/users");
+  response.EnsureSuccessStatusCode();
+  string responseBody = await response.Content.ReadAsStringAsync();
+
+  Users = JsonConvert.DeserializeObject<List<FuncModel>>(responseBody)
+    .Where(user => user.tipoUsuario == "nor")
+                .ToList();
+                
+                  
+}
+    public async Task DeleteUser(string id){
+        var client = ClientFactory.CreateClient();
+       var response = await client.PostAsync($"https://framming-api.onrender.com/deleteUsers/{id}",null);
+      
+        var errorMessage = await response.Content.ReadAsStringAsync();
+        Console.WriteLine($"Error: {errorMessage}");
+        Users.RemoveAll(user => user.idUsuario == id);
+    }
+
+      
+  @code {
+
+ private List<FuncModel> FilteredUsers
+ {
+     get
+     {
+         return string.IsNullOrEmpty(SearchString) ? Users : Users.Where(user => 
+             user.nomeUsuario.Contains(SearchString, StringComparison.OrdinalIgnoreCase) ||
+             user.emailUsuario.Contains(SearchString, StringComparison.OrdinalIgnoreCase) ||
+             user.tokenCinema.Contains(SearchString, StringComparison.OrdinalIgnoreCase)
+         ).ToList();
+     }
+ }
+}
+    }
+    
+}

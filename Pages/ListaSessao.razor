@@ -1,0 +1,185 @@
+@page "/ListaSessao"
+@using Newtonsoft.Json;
+@using System;
+@using System.Net.Http;
+@using System.Text;
+@using System.Text.Json;
+@using System.Threading.Tasks;
+
+@inject IHttpClientFactory ClientFactory
+<body>
+    <style>
+ @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+ /* Outros estilos */
+</style>
+
+<div class="container_pesquisa">
+    <button id="button_home">
+        <a href="ferqyfq.html">
+            <img src="~/Content/images/icon_home.png">
+        </a>
+    </button>
+
+    <button id="button_notificacao">
+        <a href="ferqyfq.html">
+            <img src="~/Content/images/icon_notificacao.png">
+        </a>
+
+    </button>
+
+    <div id="div_identificacao">
+        <img src="~/Content/images/Chagasperfil.png">
+        <p>Beatriz Chagas</p>
+        <div id="div_indifica_role">
+            <p>Linda</p>
+        </div>
+    </div>
+
+    <div id="divBusca">
+       <input type="text" id="txtBusca" @bind="SearchString" @bind:event="oninput">
+        <img id="imgBusca" src="~/Content/images/lupapesquisa.png" width="30px" alt="Buscar">
+    </div>
+</div>
+
+<div class="container_menu_content">
+    <div class="container_menu">
+        <nav class="menu">
+            <img id="framming_logo_menu" src="~/Content/images/framminglogo.png" />
+            <ul>
+                <div class="menu_container">
+                    <button id="button_cliente_menu">
+                        <li><a href="cad_func"><img src="~/Content/images/icon_cliente.png"></a></li>
+                    </button>
+                    <button id="button_mensagens_menu">
+                        <li><a href="Verpostadm"><img src="~/Content/images/icon_mensagens.png"></a></li>
+                    </button>
+                    <button id="button_identificacao_menu">
+                        <li><a href="#"><img src="~/Content/images/icon_identificacao.png"></a></li>
+                    </button>
+                    <button id="button_theater_menu">
+                        <li><a href="Cad_cinema"><img src="~/Content/images/theater.png"></a></li>
+                    </button>
+                </div>
+            </ul>
+            <ul>
+                <div class="buttons_sair_configuracao">
+                    <button id="button_sair_menu">
+                        <li><a href="#"><img src="~/Content/images/icon_saida.png"></a></li>
+                    </button>
+                    <button id="button_configuracao_menu">
+                        <li><a href="#"><img src="~/Content/images/configuracao.png"></a></li>
+                    </button>
+                </div>
+            </ul>
+        </nav>
+    </div>
+
+</div>
+
+<div class="container_content">
+    <div class="container_main">
+       <a href="/CadSessao" class="cadastrar_novo_cinema">Cadastrar nova Sessão</a>
+       <center>
+           <div class="rotulos_usuarios">
+               <p class="beatriz">Nome</p>
+               <p class="beatriz">Salas</p>
+               <p class="beatriz">Código</p>
+               <div class="gap"></div>
+           </div>
+
+           <div class="inner-div">
+               @foreach(var sessao in FilteredSessoes)
+               {
+                  <div class="lista_usuarios">
+                      <p class="nome_usuario_nome">@sessao.title</p>
+                      <p class="nome_usuario_nick">@sessao.salaSessao</p>
+                      <p class="nome_usuario_email" data-id="${idUsuario}">@sessao.horarioSessao</p>
+                      <button class="excluir_usu" @onclick="()=>DeleteSessao(sessao.idFilme)">X</button>
+                    
+                  </div>
+                  <div class="line-users"></div>
+               }
+           </div>
+       </center>
+   </div>
+</div>
+</body>
+
+@code {
+  private string SearchString { get; set; }
+  public List<SessaoModel> Sessoes { get; set; } = new();
+  public class SessaoModel 
+  {
+      public string idFilme;
+      public string dataSessao;
+      public string horarioSessao;
+      public string qtdIngressosSessao;
+      public string salaSessao;
+      public string idSessao;
+      public string title;
+  }
+
+  protected override async Task OnInitializedAsync()
+  {
+      var client = ClientFactory.CreateClient();
+      HttpResponseMessage response = await client.GetAsync("https://framming-api.onrender.com/session/211");
+      response.EnsureSuccessStatusCode();
+      string responseBody = await response.Content.ReadAsStringAsync();
+
+      Sessoes = JsonConvert.DeserializeObject<List<SessaoModel>>(responseBody);
+      await LoadMovieTitles();
+  }
+
+public async Task DeleteSessao(string id)
+{
+ var client = ClientFactory.CreateClient();
+ var response = await client.DeleteAsync($"https://framming-api.onrender.com/deleteSession/211/{id}");
+
+ if (!response.IsSuccessStatusCode)
+ {
+   var errorMessage = await response.Content.ReadAsStringAsync();
+   Console.WriteLine($"Error: {errorMessage}");
+ }
+ else
+ {
+   Sessoes.RemoveAll(sessao => sessao.idFilme == id);
+ }
+}
+
+  public class MovieModel
+  {
+      public string title;
+      // Outros campos necessários
+  }
+
+public async Task<string> GetMovieTitle(string movieId)
+{
+  var client = ClientFactory.CreateClient();
+  HttpResponseMessage response = await client.GetAsync($"https://framming-api.onrender.com/movies/{movieId}");
+  response.EnsureSuccessStatusCode();
+  string responseBody = await response.Content.ReadAsStringAsync();
+  var movie = JsonConvert.DeserializeObject<List<MovieModel>>(responseBody).First();
+  return movie.title;
+}
+
+  public async Task LoadMovieTitles()
+  {
+      foreach(var sessao in Sessoes)
+      {
+          sessao.title = await GetMovieTitle(sessao.idFilme);
+      }
+  }
+
+  private List<SessaoModel> FilteredSessoes
+  {
+      get
+      {
+          return string.IsNullOrEmpty(SearchString) ? Sessoes : Sessoes.Where(sessao => 
+              sessao.title.Contains(SearchString, StringComparison.OrdinalIgnoreCase) ||
+              sessao.dataSessao.Contains(SearchString, StringComparison.OrdinalIgnoreCase) ||
+              sessao.horarioSessao.Contains(SearchString, StringComparison.OrdinalIgnoreCase)
+          ).ToList();
+      }
+  }
+}
+
