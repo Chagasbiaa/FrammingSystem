@@ -1,4 +1,4 @@
-@page "/ListaCinemas"
+@page "/ListaFuncionarios"
 @using Newtonsoft.Json;
 @using System;
 @using System.Net.Http;
@@ -79,19 +79,19 @@
         <center>
             <div class="rotulos_usuarios">
                 <p class="beatriz">Nome</p>
-                <p class="beatriz">Salas</p>
+                <p class="beatriz">Localização</p>
                 <p class="beatriz">Código</p>
                 <div class="gap"></div>
             </div>
 
             <div class="inner-div">
-            @foreach(var cinema in FilteredCinemas){
-                <div class="lista_usuarios">
-                    <p class="nome_usuario_nome">@cinema.nomeCinema</p>
-                    <p class="nome_usuario_nick">@cinema.qtdSala</p>
-                    <p class="nome_usuario_email" data-id="${idUsuario}">@cinema.tokenCinema</p>
-                    <button class="excluir_usu" @onclick="()=>DeleteCinema(cinema.tokenCinema)">X</button>
-                    <a href ="/AlterarCinema/@cinema.tokenCinema">edit</a>
+                @foreach(var user in FilteredUsers){
+                    <div class="lista_usuarios">
+                    <p class="nome_usuario_nome">@user.nomeUsuario</p>
+                    <p class="nome_usuario_nick">@user.emailUsuario</p>
+                    <p class="nome_usuario_email" data-id="${idUsuario}">@user.tokenCinema</p>
+                    <button class="excluir_usu" @onclick="()=>DeleteUser(user.idUsuario)">X</button>
+                    <a href ="/AlterarFuncionario/@user.idUsuario">edit</a>
                 </div>
 
                 <div class="line-users"></div>
@@ -108,45 +108,55 @@
 </div>
 @code {
     private string SearchString { get; set; }
-    public List<CinemaModel> Cinemas  { get; set; } = new();
-    public class CinemaModel 
+    public List<FuncModel> Users  { get; set; } = new();
+    public class FuncModel 
     {
-        public string enderecoCinema;
-        public string nomeCinema;
-        public string qtdSala;
+        public string idUsuario;
+        public string emailUsuario;
+        public string nomeUsuario;
+        public string senhaUsuario;
         public string tokenCinema;
-        public string idCinema;
+
+        public string tipoUsuario;
     }
 
-    protected override async Task OnInitializedAsync()
-    {
+   protected override async Task OnInitializedAsync()
+{
+  var client = ClientFactory.CreateClient();
+  HttpResponseMessage response = await client.GetAsync("https://framming-api.onrender.com/users");
+  response.EnsureSuccessStatusCode();
+  string responseBody = await response.Content.ReadAsStringAsync();
 
-    var client = ClientFactory.CreateClient();
-    HttpResponseMessage response = await client.GetAsync("https://framming-api.onrender.com/cinema");
-    response.EnsureSuccessStatusCode();
-    string responseBody = await response.Content.ReadAsStringAsync();
-
-    Cinemas = JsonConvert.DeserializeObject<List<CinemaModel>>(responseBody);
-    }
-    public async Task DeleteCinema(string id){
+  Users = JsonConvert.DeserializeObject<List<FuncModel>>(responseBody)
+    .Where(user => user.tipoUsuario == "fun")
+                .ToList();
+                
+                  
+}
+    public async Task DeleteUser(string id){
         var client = ClientFactory.CreateClient();
-       var response = await client.PostAsync($"https://framming-api.onrender.com/deleteCinema/{id}",null);
+       var response = await client.PostAsync($"https://framming-api.onrender.com/deleteUsers/{id}",null);
       
         var errorMessage = await response.Content.ReadAsStringAsync();
         Console.WriteLine($"Error: {errorMessage}");
-        Cinemas.RemoveAll(cinema => cinema.tokenCinema == id);
+        Users.RemoveAll(user => user.idUsuario == id);
     }
-    } 
-     @code {
-    private List<CinemaModel> FilteredCinemas
+
+      
+  @code {
+
+ private List<FuncModel> FilteredUsers
  {
      get
      {
-         return string.IsNullOrEmpty(SearchString) ? Cinemas : Cinemas.Where(cinema => 
-             cinema.nomeCinema.Contains(SearchString, StringComparison.OrdinalIgnoreCase) ||
-             cinema.qtdSala.Contains(SearchString, StringComparison.OrdinalIgnoreCase) ||
-             cinema.tokenCinema.Contains(SearchString, StringComparison.OrdinalIgnoreCase)
+         return string.IsNullOrEmpty(SearchString) ? Users : Users.Where(user => 
+             user.nomeUsuario.Contains(SearchString, StringComparison.OrdinalIgnoreCase) ||
+             user.emailUsuario.Contains(SearchString, StringComparison.OrdinalIgnoreCase) ||
+             user.tokenCinema.Contains(SearchString, StringComparison.OrdinalIgnoreCase)
          ).ToList();
      }
  }
+}
+    }
+    
 }
