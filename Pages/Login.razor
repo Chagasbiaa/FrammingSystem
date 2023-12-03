@@ -1,0 +1,118 @@
+@page "/Login"
+@using Newtonsoft.Json;
+@using System;
+@using System.Net.Http;
+@using System.Text;
+@using System.Text.Json;
+@using System.Threading.Tasks;
+
+@inject IHttpClientFactory ClientFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Usuários</PageTitle>
+<body>
+
+<style>
+ @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+ /* Outros estilos */
+</style>
+<main class="main">
+ <section class="main__card-section">
+ <section class="card-section__welcome-section">
+     <header class="welcome-section__header">
+         <img src="~/Content/images/logo-framming.png" alt="Framming Logo" class="header__logo" />
+         <div class="welcome-section__title-div">
+           <h1 class="title-div__title">Bem-Vindo</h1>
+           <h2 class="title-div__subtitle">Enquadrando Emoções</h2>
+         </div>
+     </header>
+     <img src="~/Content/images/account-image.png" alt="Account Image" class="welcome-section__image" />
+ </section>
+ <section class="card-section__account-section">
+     <header class="account-section__header">
+         <div class="header__account-div">
+           <a href="/Login" rel="noreferrer" class="account-div__link">Login</a>
+           <a href="/Register" rel="noreferrer" class="account-div__link">Criar Conta</a>
+         </div>
+     </header>
+     <EditForm Model="@this" OnValidSubmit="OnValidSubmit">
+       <DataAnnotationsValidator />
+       <ValidationSummary />
+         <div class="form__input-div">
+           <label for="inputEmail" class="input-div__label">Email</label>
+           <InputText id="inputEmail" @bind-Value="Email" type="email" class="input-div__input" placeholder="example@email.com" />
+         </div>
+         <div class="form__input-div">
+           <label for="inputPassword" class="input-div__label">Senha</label>
+           <InputText id="inputPassword" @bind-Value="Password" type="password" class="input-div__input" placeholder="********" />
+           <label for="inputPassword" class="input-div__label-see-password"><img src="~/Content/images/see-password-icon.png" alt="See Password Icon" /></label>
+         </div>
+         <div class="form__password-info-div">
+           <div class="password-info-div__remember-div">
+             <input type="checkbox" class="password-info-div__remember-input" id="remember-me">
+             <label for="remember-me" class="password-info-div__remember-label">Lembre de mim</label>
+           </div>
+           <a href="#" class="password-info-div__forgot-link">Esqueceu sua senha?</a>
+         </div>
+         <button type="submit" class="form__submit">Login</button>
+         <p class="form__no-account-paragraph">
+           Não tem uma conta? <a href="/Register" class="no-account-paragraph__link">Registre-se!</a>
+         </p>
+     </EditForm>
+     @if (!string.IsNullOrEmpty(ErrorMessage))
+     {
+         <p class="error-message">@ErrorMessage</p>
+     }
+ </section>
+ </section>
+</main>
+</body>
+
+@code {
+ private string Email { get; set; }
+ private string Password { get; set; }
+ private string ErrorMessage { get; set; }
+
+ private async Task OnValidSubmit()
+{
+ var client = ClientFactory.CreateClient();
+ var content = new StringContent(JsonConvert.SerializeObject(new { email = Email, password = Password }), Encoding.UTF8, "application/json");
+ var response = await client.PostAsync("https://framming-api.onrender.com/users/login", content);
+
+ if (response.IsSuccessStatusCode)
+ {
+     var result = await response.Content.ReadAsStringAsync();
+     var user = JsonConvert.DeserializeObject<User>(result);
+
+     // Check if the userType property exists
+     if (user.userType != null)
+     {
+         switch (user.userType)
+         {
+             case "fun":
+                NavigationManager.NavigateTo("/cad_func");
+                break;
+             case "adm":
+                NavigationManager.NavigateTo("/cad_sessao");
+                break;
+             default:
+                ErrorMessage = "Você não tem acesso ao sistema";
+                break;
+         }
+     }
+     else
+     {
+         ErrorMessage = "userType property not found in the response";
+     }
+ }
+ else
+ {
+     ErrorMessage = "Usuário não encontrado";
+ }
+}
+public class User
+{
+   public string userType { get; set; }
+}
+
+}

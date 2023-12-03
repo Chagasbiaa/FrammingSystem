@@ -8,6 +8,12 @@
 
 @inject IHttpClientFactory ClientFactory
 
+<PageTitle>Cinemas</PageTitle>
+<body>
+<style>
+ @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+ /* Outros estilos */
+</style>
 
 
 <div class="container_pesquisa">
@@ -45,16 +51,16 @@
             <ul>
                 <div class="menu_container">
                     <button id="button_cliente_menu">
-                        <li><a href="cad_func"><img src="~/Content/images/icon_cliente.png"></a></li>
+                        <li><a href="ListaFuncionarios"><img src="~/Content/images/icon_cliente.png"></a></li>
                     </button>
                     <button id="button_mensagens_menu">
                         <li><a href="Verpostadm"><img src="~/Content/images/icon_mensagens.png"></a></li>
                     </button>
                     <button id="button_identificacao_menu">
-                        <li><a href="#"><img src="~/Content/images/icon_identificacao.png"></a></li>
+                        <li><a href="ListaUsuarios"><img src="~/Content/images/icon_identificacao.png"></a></li>
                     </button>
                     <button id="button_theater_menu">
-                        <li><a href="Cad_cinema"><img src="~/Content/images/theater.png"></a></li>
+                        <li><a href="ListaCinemas"><img src="~/Content/images/theater.png"></a></li>
                     </button>
                 </div>
             </ul>
@@ -75,7 +81,9 @@
 
 <div class="container_content">
     <div class="container_main">
-        <a href="/CadCinema" class="cadastrar_novo_cinema">Cadastrar novo Cinema</a>
+     <button class="cadastrar_novo_cinema">
+        <a href ="/CadCinema" class="cadastrar_novo_cinema_a">Cadastrar novo Cinema</a>
+        </button>
         <center>
             <div class="rotulos_usuarios">
                 <p class="beatriz">Nome</p>
@@ -91,7 +99,11 @@
                     <p class="nome_usuario_nick">@cinema.qtdSala</p>
                     <p class="nome_usuario_email" data-id="${idUsuario}">@cinema.tokenCinema</p>
                     <button class="excluir_usu" @onclick="()=>DeleteCinema(cinema.tokenCinema)">X</button>
-                    <a href ="/AlterarCinema/@cinema.tokenCinema">edit</a>
+             
+
+                    <button class="button_alterar">
+                        <a href="AlterarCinema/@cinema.tokenCinema"><img src="~/Content/images/icon_cliente.png"></a>
+                    </button>
                 </div>
 
                 <div class="line-users"></div>
@@ -106,6 +118,25 @@
 
 
 </div>
+
+@if (ShowMessage2)
+{
+   <div class="succes_message2"></div>
+}
+
+@if (ShowMessage)
+{
+
+ <div class="succes_message" @onclick="HideSuccessMessages"><p>Cinema excluído com Sucesso!</p>
+  <button class="button_succes"><a href="ListaCinemas"><img src="~/Content/images/theater.png"></a>x</button>
+ </div>
+ 
+}
+
+</body>
+
+
+
 @code {
     private string SearchString { get; set; }
     public List<CinemaModel> Cinemas  { get; set; } = new();
@@ -116,7 +147,12 @@
         public string qtdSala;
         public string tokenCinema;
         public string idCinema;
+
+        
     }
+
+     bool ShowMessage = false;
+   bool ShowMessage2 = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -127,16 +163,25 @@
     string responseBody = await response.Content.ReadAsStringAsync();
 
     Cinemas = JsonConvert.DeserializeObject<List<CinemaModel>>(responseBody);
+    }public async Task DeleteCinema(string id){
+   var client = ClientFactory.CreateClient();
+   var response = await client.PostAsync($"https://framming-api.onrender.com/deleteCinema/{id}",null);
+
+   Cinemas.RemoveAll(cinema => cinema.tokenCinema == id);
+
+   if (response.IsSuccessStatusCode)
+   {
+       ShowMessage2 = true;
+       ShowMessage = true;
+   }
+   else
+   {
+       var errorMessage = await response.Content.ReadAsStringAsync();
+       Console.WriteLine($"Error: {errorMessage}");
+   }
+}
     }
-    public async Task DeleteCinema(string id){
-        var client = ClientFactory.CreateClient();
-       var response = await client.PostAsync($"https://framming-api.onrender.com/deleteCinema/{id}",null);
-      
-        var errorMessage = await response.Content.ReadAsStringAsync();
-        Console.WriteLine($"Error: {errorMessage}");
-        Cinemas.RemoveAll(cinema => cinema.tokenCinema == id);
     }
-    } 
      @code {
     private List<CinemaModel> FilteredCinemas
  {
@@ -149,4 +194,10 @@
          ).ToList();
      }
  }
+   void HideSuccessMessages()
+   {
+       ShowMessage = false;
+       ShowMessage2 = false;
+   }
+}
 }

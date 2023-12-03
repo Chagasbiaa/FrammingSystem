@@ -7,7 +7,12 @@
 
 @inject IHttpClientFactory ClientFactory
 
-<PageTitle>Counter</PageTitle>
+<PageTitle>Alterar Funcionario</PageTitle>
+<body>
+<style>
+ @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+ /* Outros estilos */
+</style>
 
 <div class="container_pesquisa">
   <button id="button_home">
@@ -70,7 +75,7 @@
     </nav>
 
   </div>
-  <div class="container_content">
+<div class="container_content @(ShowMessage ? "filter-black" : "")">
     <div class="container_main">
       <div class="codigo_cinema">
         <img id="foto_codigo_func" src="~/Content/images/icon_identifica_func.png" />
@@ -97,7 +102,7 @@
 
       <p id="codigo_email_p">Senha</p>
       <p id="codigo_email_result"></p>
-      <input id="email_func" type="password" placeholder="***********"/>
+      <input id="email_func" type="password" placeholder="***********" disabled/>
       <img id="email_func_img" src="~/Content/images/icon_numsalas.png" width="35px" />
 
       <p id="codigo_senha_p">Código Cinema:</p>
@@ -116,7 +121,21 @@
   </div>
 </div>
 
+@if (ShowMessage2)
+{
+   <div class="succes_message2"></div>
+}
 
+@if (ShowMessage)
+{
+
+ <div class="succes_message"><p>Fucionário Alterado com Sucesso!</p>
+  <button class="button_succes"><a href="ListaFuncionarios"><img src="~/Content/images/theater.png"></a>x</button>
+ </div>
+ 
+}
+
+</body>
 @code{
 
    public inputModel Input {get; set;} = new();
@@ -125,9 +144,15 @@
     public string emailUsuario;
     public string tokenCinema;
     public string senhaUsuario;
-   
 
   }
+
+  bool ShowMessage = false;
+   bool ShowMessage2 = false;
+
+
+  
+
   [Parameter]
    public string idUsuario { get; set;}
 
@@ -163,7 +188,8 @@
 
  if (response.IsSuccessStatusCode)
  {
-     Console.WriteLine("User updated successfully");
+       ShowMessage = true;
+        ShowMessage2 = true;
  }
  else
  {

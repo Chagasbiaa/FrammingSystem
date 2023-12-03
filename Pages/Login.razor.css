@@ -1,0 +1,303 @@
+
+body {
+    background-color: #DEDEDE;
+    overflow-x: hidden;
+    width:100.6%;
+    height: 100.6%;
+    margin:auto;
+    overflow-y: hidden;
+ 
+}
+* {
+    margin: 0;
+    padding: 0; 
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+.main {
+    width: 100%;
+    height: 100%;
+    background:#DEDEDE url(../../Content/images/account-background.png) no-repeat center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.main__card-section {
+    background-color: #F0F0F0;
+    width: 60em;
+    height: 35em;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    flex-wrap: wrap;
+    gap: 1.8em;
+    border-radius: 18px;
+    box-shadow: -5px 10px 20px 10px rgba(0, 0, 0, 0.13);
+    padding: 2em 0em;
+    margin: 1em;
+}
+
+.section__welcome-section {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.welcome-section__header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: -.8em;
+}
+.header__logo {
+    width: 4em;
+    height: 4em; 
+    margin-top: 0.3em;
+}
+.welcome-section__title-div {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+    color: #434343;
+    font-weight: 800;
+}
+.title-div__title {
+    font-size: 2em;
+    color: #000000;
+}
+.title-div__subtitle {
+    font-size: 1em;
+    font-weight: 800;
+}
+.welcome-section__image {
+    width: 100%;
+    min-width: 20em;
+    max-width: 24em;
+}
+/*Account section - right side of section*/
+.card-section__account-section{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+.account-section__header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.header__account-div {
+    width: 22em;
+    height: 3em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #DEDEDE;
+    gap: -0.5em;
+    border-radius: 1.2em;
+    margin-top: 3em;
+    margin-bottom: 3em;
+}
+.account-div__link {
+    text-decoration: none;
+    color:#434343;
+    width: 11em;
+    height: 3em;
+    border-radius: 1.2em;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    transition: 300ms;
+}
+.account-div__link:hover {
+    color:#000000;
+}
+.account-div__link:nth-child(1) {
+    color: #F0F0F0;
+    background-color:  #FF6666;
+    border-radius: 1.2em 0.2em;
+}
+.account-div__link:nth-child(1):hover {
+    color: #FFFFFF;
+    background-color:#E34B4B; 
+}
+.account-section__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: .8em;
+}
+.form__input-div {
+    background-color:#DEDEDE;
+    width: 22em;
+    height: 4em;
+    position: relative;
+    border-radius: .5em;
+    padding-left: 1em;
+}
+.input-div__label {
+    position: absolute;
+    left: 4.6em;
+    top: .9em;
+    color: #000000;
+    font-weight: 800;
+    font-size: .8em;
+}
+.input-div__input {
+    width: 100%;
+    height: 100%;
+    outline: none;
+    border: none;
+    color:#000000;
+    font-weight: 600;
+    background-color:#DEDEDE; 
+    padding-left: 3em;
+    padding-right: 1em;
+    padding-top: 1.2em;
+    font-size: .9em;
+}
+#inputEmail {
+    background: url(../../Content/images/email-icon.png) no-repeat left;
+}
+#inputPassword {
+    background: url(../../Content/images/password-icon.png) no-repeat left;
+}
+.input-div__label-see-password {
+    position: absolute;
+    right: 1em;
+    top: 1.3em;
+}
+.input-div__label-see-password:hover {
+    cursor: pointer;
+}
+input::-ms-reveal { /*Desabilita o "ver mais" do edge*/
+    display:none;
+}
+.form__password-info-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: .8em;
+    gap: 7em;
+}
+.password-info-div__remember-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .5em;
+    transition: 300ms;
+    font-weight: 600;
+}
+.password-info-div__remember-label {
+    color: #434343;
+}
+.password-info-div__remember-label:hover {
+    cursor: pointer;
+    color: #000000;
+}
+.password-info-div__remember-input {
+    width: 1em;
+    border: none;
+    outline: none;
+    accent-color:  #FF6666;
+    caret-color:#FFFFFF;  
+}
+.password-info-div__remember-input:hover {
+    caret-color:#FFFFFF;  
+    cursor: pointer;
+}
+.password-info-div__forgot-link {
+    color:  #FF6666;
+    text-decoration: none;
+    transition: 300ms;
+    font-weight: 600;
+}
+.password-info-div__forgot-link:hover {
+    color: #E34B4B;
+}
+.form__submit {
+    width: 18em;
+    height: 3em;
+    font-weight: 800;
+    font-size: 1.2em;
+    color: #F0F0F0;
+    background-color: #FF6666;
+    transition: 300ms;
+    border: none;
+    outline: none;
+    border-radius: .5em;
+    margin-top: .8em;
+}
+.form__submit:hover {
+    color: #FFFFFF;
+    background-color: #E34B4B;
+    cursor: pointer;
+}
+.form__no-account-paragraph {
+    font-size: .8em;
+    color: #000000;
+    font-weight: 600;
+}
+.no-account-paragraph__link {
+    color:  #FF6666;
+    text-decoration: none;
+    transition: 300ms;
+}
+.no-account-paragraph__link:hover {
+    color:#E34B4B;
+}
+/* MEDIA QUERIES */
+
+@media screen and (max-width: 920px) {
+    .header__logo {
+        width: 6em;
+        height: 6em;
+    }
+    .welcome-section__header {
+        flex-wrap: wrap;
+        gap: 1.5em;
+    }
+    .main__card-section {
+        height: auto;
+    } 
+    .welcome-section__image {
+        display: none;
+    }
+    .card-section__welcome-section {
+        margin-top: -2em;
+    }
+
+}
+@media screen and (max-width: 745px) {
+    .header__logo {
+        width: 4em;
+        height: 4em;
+        margin: 0em;
+    }
+    .main__card-section {
+        margin: 1em 0em;
+    }
+    .card-section__welcome-section {
+        margin-bottom: -2em;
+    }
+    .card-section__welcome-section {
+        margin-top: 0em;
+    }
+
+}

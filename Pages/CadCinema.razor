@@ -7,7 +7,12 @@
 
 @inject IHttpClientFactory ClientFactory
 
-<PageTitle>Counter</PageTitle>
+<PageTitle>Cadastrar Cinema</PageTitle>
+<body>
+<style>
+ @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+ /* Outros estilos */
+</style>
 
 
 <div class="container_pesquisa">
@@ -44,27 +49,27 @@
       <img id="framming_logo_menu" src="~/Content/images/framminglogo.png" />
       <ul>
         <div class="menu_container">
-          <button id="button_cliente_menu">
-            <li><a href="cad_func"><img src="~/Content/images/icon_cliente.png"></a></li>
-          </button>
-          <button id="button_mensagens_menu">
-            <li><a href="Verpostadm"><img src="~/Content/images/icon_mensagens.png"></a></li>
-          </button>
-          <button id="button_identificacao_menu">
-            <li><a href="#"><img src="~/Content/images/icon_identificacao.png"></a></li>
-          </button>
-          <button id="button_theater_menu">
-            <li><a href="Cad_cinema"><img src="~/Content/images/theater.png"></a></li>
-          </button>
-        </div>
+                    <button id="button_cliente_menu">
+                        <li><a href="ListaFuncionarios"><img src="~/Content/images/icon_cliente.png"></a></li>
+                    </button>
+                    <button id="button_mensagens_menu">
+                        <li><a href="Verpostadm"><img src="~/Content/images/icon_mensagens.png"></a></li>
+                    </button>
+                    <button id="button_identificacao_menu">
+                        <li><a href="ListaUsuarios"><img src="~/Content/images/icon_identificacao.png"></a></li>
+                    </button>
+                    <button id="button_theater_menu">
+                        <li><a href="ListaCinemas"><img src="~/Content/images/theater.png"></a></li>
+                    </button>
+                </div>
       </ul>
       <ul>
         <div class="buttons_sair_configuracao">
           <button id="button_sair_menu">
-            <li><a href="#"><img src="~/Content/images/icon_saida.png"></a></li>
+            <li><a href="#"><img src="~/images/icon_saida.png"></a></li>
           </button>
           <button id="button_configuracao_menu">
-            <li><a href="#"><img src="~/Content/images/configuracao.png"></a></li>
+            <li><a href="#"><img src="~/images/configuracao.png"></a></li>
           </button>
         </div>
       </ul>
@@ -115,7 +120,20 @@
     </div>
   </div>
 </div>
+@if (ShowMessage2)
+{
+   <div class="succes_message2"></div>
+}
 
+@if (ShowMessage)
+{
+
+ <div class="succes_message"><p>Cinema Cadastrado com Sucesso!</p>
+  <button class="button_succes"><a href="ListaCinemas"><img src="~/Content/images/theater.png"></a>x</button>
+ </div>
+ 
+}
+</body>
 @code{
 
    public inputModel Input {get; set;} = new();
@@ -126,6 +144,8 @@
     public string Codigocine;
  
 }
+  bool ShowMessage = false;
+   bool ShowMessage2 = false;
   public async Task Submit(){
       Console.WriteLine("Test");
       var client = ClientFactory.CreateClient();
@@ -150,11 +170,16 @@
        
        var response = await client.PostAsync("https://framming-api.onrender.com/cinema", jsonContent);
       
-        var errorMessage = await response.Content.ReadAsStringAsync();
-        Console.WriteLine($"Error: {errorMessage}");
-
-  }
-
+        if (response.IsSuccessStatusCode)
+ {
+       ShowMessage = true;
+        ShowMessage2 = true;
+ }
+ else
+ {
+     var errorMessage = await response.Content.ReadAsStringAsync();
+     Console.WriteLine($"Error: {errorMessage}");
+ }
 }
 }
 

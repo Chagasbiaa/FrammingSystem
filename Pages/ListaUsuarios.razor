@@ -8,7 +8,13 @@
 
 @inject IHttpClientFactory ClientFactory
 
+<PageTitle>Usuários</PageTitle>
+<body>
 
+<style>
+ @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+ /* Outros estilos */
+</style>
 
 <div class="container_pesquisa">
     <button id="button_home">
@@ -45,16 +51,16 @@
             <ul>
                 <div class="menu_container">
                     <button id="button_cliente_menu">
-                        <li><a href="cad_func"><img src="~/Content/images/icon_cliente.png"></a></li>
+                        <li><a href="ListaFuncionarios"><img src="~/Content/images/icon_cliente.png"></a></li>
                     </button>
                     <button id="button_mensagens_menu">
                         <li><a href="Verpostadm"><img src="~/Content/images/icon_mensagens.png"></a></li>
                     </button>
                     <button id="button_identificacao_menu">
-                        <li><a href="#"><img src="~/Content/images/icon_identificacao.png"></a></li>
+                        <li><a href="ListaUsuarios"><img src="~/Content/images/icon_identificacao.png"></a></li>
                     </button>
                     <button id="button_theater_menu">
-                        <li><a href="Cad_cinema"><img src="~/Content/images/theater.png"></a></li>
+                        <li><a href="ListaCinemas"><img src="~/Content/images/theater.png"></a></li>
                     </button>
                 </div>
             </ul>
@@ -75,12 +81,12 @@
 
 <div class="container_content">
     <div class="container_main">
-        <a href="/CadCinema" class="cadastrar_novo_cinema">Cadastrar novo Cinema</a>
+    
         <center>
             <div class="rotulos_usuarios">
                 <p class="beatriz">Nome</p>
-                <p class="beatriz">Localização</p>
-                <p class="beatriz">Código</p>
+                <p class="beatriz">Usuário</p>
+                <p class="beatriz">Email</p>
                 <div class="gap"></div>
             </div>
 
@@ -88,11 +94,13 @@
                 @foreach(var user in FilteredUsers){
                     <div class="lista_usuarios">
                     <p class="nome_usuario_nome">@user.nomeUsuario</p>
-                    <p class="nome_usuario_nick">@user.emailUsuario</p>
-                    <p class="nome_usuario_email" data-id="${idUsuario}">@user.tokenCinema</p>
+                    <p class="nome_usuario_nick">@user.nickUsuario</p>
+                    <p class="nome_usuario_email" data-id="${idUsuario}">@user.emailUsuario</p>
                     <button class="excluir_usu" @onclick="()=>DeleteUser(user.idUsuario)">X</button>
-                    <a href ="/AlterarFuncionario/@user.idUsuario">edit</a>
-                </div>
+                   
+                
+
+                    </div>
 
                 <div class="line-users"></div>
                 
@@ -106,20 +114,35 @@
 
 
 </div>
+</body>
+@if (ShowMessage2)
+{
+   <div class="succes_message2"></div>
+}
+
+@if (ShowMessage)
+{
+
+ <div class="succes_message" @onclick="HideSuccessMessages"><p>Conta desativada com Sucesso!</p>
+  <button class="button_succes"><a href="ListaCinemas"><img src="~/Content/images/theater.png"></a>x</button>
+ </div>
+ 
+}
 @code {
     private string SearchString { get; set; }
     public List<FuncModel> Users  { get; set; } = new();
     public class FuncModel 
     {
         public string idUsuario;
-        public string emailUsuario;
+        public string nickUsuario;
         public string nomeUsuario;
-        public string senhaUsuario;
+        public string emailUsuario;
         public string tokenCinema;
 
         public string tipoUsuario;
     }
-
+  bool ShowMessage = false;
+   bool ShowMessage2 = false;
    protected override async Task OnInitializedAsync()
 {
   var client = ClientFactory.CreateClient();
@@ -137,9 +160,20 @@
         var client = ClientFactory.CreateClient();
        var response = await client.PostAsync($"https://framming-api.onrender.com/deleteUsers/{id}",null);
       
-        var errorMessage = await response.Content.ReadAsStringAsync();
-        Console.WriteLine($"Error: {errorMessage}");
+    
         Users.RemoveAll(user => user.idUsuario == id);
+        
+   if (response.IsSuccessStatusCode)
+   {
+       ShowMessage2 = true;
+       ShowMessage = true;
+   }
+   else
+   {
+       var errorMessage = await response.Content.ReadAsStringAsync();
+       Console.WriteLine($"Error: {errorMessage}");
+   }
+}
     }
 
       
@@ -151,11 +185,16 @@
      {
          return string.IsNullOrEmpty(SearchString) ? Users : Users.Where(user => 
              user.nomeUsuario.Contains(SearchString, StringComparison.OrdinalIgnoreCase) ||
-             user.emailUsuario.Contains(SearchString, StringComparison.OrdinalIgnoreCase) ||
-             user.tokenCinema.Contains(SearchString, StringComparison.OrdinalIgnoreCase)
+             user.nickUsuario.Contains(SearchString, StringComparison.OrdinalIgnoreCase) ||
+             user.emailUsuario.Contains(SearchString, StringComparison.OrdinalIgnoreCase)
          ).ToList();
      }
  }
+   void HideSuccessMessages()
+   {
+       ShowMessage = false;
+       ShowMessage2 = false;
+   }
 }
     }
     
