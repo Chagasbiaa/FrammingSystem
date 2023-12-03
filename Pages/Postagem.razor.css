@@ -35,6 +35,30 @@ body {
     padding: 6px;
 }
 
+.rotulos_usuarios{
+    width: 257px;
+    height: 630px;
+    background-color: #ccc;
+    margin-top: -762px;
+    position: absolute;
+    margin-left: 310px;
+    border-radius: 20px;
+    color: #707070;
+    
+
+}
+
+.rotulos_usuarios p {
+    text-align: left;
+    font-family: Poppins;
+    font-size: 20px;
+    font-style: normal;
+    display: inline-block;
+    font-weight: 600;
+    line-height: 118.5%;
+    padding: 6px;
+}
+
 .critica h1{
     color: #121212;
     text-align: left;
@@ -76,11 +100,11 @@ body {
 
     .inner-div{
         width: 853px;
-        margin-left: 214px;
+        margin-left: 743px;
         background-color: #D9D9D9;
         height: 594px;
         overflow-y: auto;
-        margin-top: -1101px;
+        margin-top: -677px;
         border-radius: 50px;
         height: 440px;
     }
@@ -752,15 +776,16 @@ body {
 }
 
 #foto_codigo_func {
-    margin-left: 63px;
-    margin-top: 49px;
+  
+    margin-top: 69px;
     width: 200px;
     height: 200px;
-    border-radius: 50%; /* Deixa a imagem redonda */
-    overflow: hidden; /* Esconde partes da imagem que ultrapassam a borda circular */
+    border-radius: 50%;
+    overflow: hidden;
     grid-column: 11;
-    margin-left: 58px;
+    margin-left: 29px;
 }
+
     #divBuscaPostagem {
         border-radius: 65px;
         border: none;

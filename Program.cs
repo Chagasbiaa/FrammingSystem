@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Framming.Data;
+using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,14 +12,20 @@ builder.Services.AddSingleton<WeatherForecastService>();
 
 builder.Services.AddHttpClient();
 
+// Add authorization services
+builder.Services.AddAuthorization(options =>
+{
+   options.AddPolicy("AdmOnly", policy => policy.RequireClaim("tipoUsuario", "adm"));
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+   app.UseExceptionHandler("/Error");
+   // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+   app.UseHsts();
 }
 
 app.UseHttpsRedirection();

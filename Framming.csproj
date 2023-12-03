@@ -8,6 +8,8 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+   <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="6.0.1" />
   </ItemGroup>
+
 
 </Project>

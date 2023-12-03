@@ -4,6 +4,8 @@
 @using System.Text;
 @using System.Text.Json;
 @using System.Threading.Tasks;
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@using System.Security.Claims;
 
 @inject IHttpClientFactory ClientFactory
 
@@ -34,7 +36,7 @@
                 <img src="~/Content/images/Chagasperfil.png">
                 <p>Beatriz Chagas</p>
                 <div id="div_indifica_role">
-                    <p>Linda</p>
+                    <p>Funcionário</p>
                 </div>
             </div>
 
@@ -55,7 +57,7 @@
                         <li><a href="ListaFuncionarios"><img src="~/Content/images/icon_cliente.png"></a></li>
                     </button>
                     <button id="button_mensagens_menu">
-                        <li><a href="Verpostadm"><img src="~/Content/images/icon_mensagens.png"></a></li>
+                        <li><a href="ListaPostagem"><img src="~/Content/images/icon_mensagens.png"></a></li>
                     </button>
                     <button id="button_identificacao_menu">
                         <li><a href="ListaUsuarios"><img src="~/Content/images/icon_identificacao.png"></a></li>
@@ -160,7 +162,22 @@ protected override void OnInitialized()
 {
    Input.Filme = MovieId;
 }
+protected override async Task OnInitializedAsync()
+{
+   var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+   var user = authState.User;
 
+   if (user.Identity.IsAuthenticated)
+   {
+       var claimsIdentity = user.Identity as ClaimsIdentity;
+       var codCinemaClaim = claimsIdentity.FindFirst("codCinema");
+
+       if (codCinemaClaim != null)
+       {
+           Input.Filme = codCinemaClaim.Value;
+       }
+   }
+}
   public async Task Submit(){
       Console.WriteLine("Test");
       var client = ClientFactory.CreateClient();
