@@ -41,7 +41,7 @@
             </div>
 
             <div id="divBusca">
-                <input type="text" id="txtBusca" img src="~/Content/images/lupapesquisa.png">
+                <input type="text" id="txtBusca"  @oninput="FilterPostagens" >
                 <img id="imgBusca" src="~/Content/images/lupapesquisa.png" width="30px" alt="Buscar">
             </div>
         </div>
@@ -78,10 +78,7 @@
             <div class="container_main">
                 <div class="codigo_cinema">
                     <img id="foto_codigo_func" src="~/Content/images/icon_identifica_func.png" />
-                    <p id="cod_cinema_p">Código Cinema:</p>
-                    <p id="cod_nome_p">Nome:</p>
-                    <p id="cod_email_p">Email:</p>
-                    <p id="cod_senha_p">Senha:</p>
+                 
                 </div>
 
             </div>
@@ -120,33 +117,76 @@
             <button id="excluir_post">Excluir Postagem</button>
         </div>
 
-        @foreach (var postagem in Postagens)
+
+            <div class="container_content">
+            <div class="rotulos_usuarios">
+                <p class="beatriz">Nome: @nomeUsuario</p>
+                <p class="beatriz">Usuário</p>
+                <p class="beatriz">Postagens</p>
+                <div class="gap"></div>
+            </div>
+
+            <div class="inner-div">
+                @foreach (var postagem in Postagens)
             {
-            <div>
-                <p>@postagem.idFilme</p>
-                <p>@postagem.textoCritica</p>
-                <p>@postagem.dataCritica</p>
+            <div class="critica">
+                 <div class="line-users"></div>
+                <p>Id do Filme: </p><h1>  @postagem.idFilme</h1><br>
+                <p>Critica: </p><h1>  @postagem.textoCritica</h1><br>
+               <p>Data da Publicação: </p><h1> @postagem.dataCritica.ToShortDateString()</h1><br>
+                <p>Quantidade de estrelas: </p><h1>  @postagem.notaCritica</h1>
+                 <button class="excluir_usu" @onclick="() => ExcluirPostagem(postagem.idFilme)"><p>Excluir Postagem</p></button>
             </div>
             }
- 
-
+                
+                    </div>
+                    </div>
+            
     </main>
 </body>
 @code {
-  private string idUsuario;
-  private List<PostagemModel> Postagens { get; set; } = new();
+
+   private string idUsuario;
+   private List<PostagemModel> Postagens { get; set; } = new();
+
+   // Defina as variáveis aqui
+   private string nomeUsuario;
+   private string emailUsuario;
+   private string nickUsuario;
+
+   public class UserModel
+   {
+       public string nomeUsuario { get; set; }
+       public string emailUsuario { get; set; }
+       public string nickUsuario { get; set; }
+   }
 
 protected override async Task OnInitializedAsync()
 {
- var uri = new Uri(NavigationManager.Uri);
- var query = QueryHelpers.ParseQuery(uri.Query);
+   var uri = new Uri(NavigationManager.Uri);
+   var query = QueryHelpers.ParseQuery(uri.Query);
 
- if (query.TryGetValue("idUsuario", out var idUsuarioQuery))
- {
-     idUsuario = idUsuarioQuery.FirstOrDefault();
- }
+   if (query.TryGetValue("idUsuario", out var idUsuarioQuery))
+   {
+       idUsuario = idUsuarioQuery.FirstOrDefault();
+   }
 
- await GetPostagens();
+   await GetUserData();
+   await GetPostagens();
+}
+
+private async Task GetUserData()
+{
+   var response = await HttpClient.GetAsync($"https://framming-api.onrender.com/users/{idUsuario}");
+   response.EnsureSuccessStatusCode();
+   var responseBody = await response.Content.ReadAsStringAsync();
+
+   var user = JsonConvert.DeserializeObject<UserModel>(responseBody);
+
+   // Exibir os dados do usuário
+   nomeUsuario = user.nomeUsuario;
+   emailUsuario = user.emailUsuario;
+   nickUsuario = user.nickUsuario;
 }
 
 private async Task GetPostagens()
@@ -163,7 +203,39 @@ private async Task GetPostagens()
       public string idFilme { get; set; }
       public string textoCritica { get; set; }
       public DateTime dataCritica { get; set; }
+      public string notaCritica { get; set; }
   }
+   private string SearchString { get; set; }
+
+   private void FilterPostagens(ChangeEventArgs e)
+{
+   SearchString = e.Value.ToString();
+   Postagens = Postagens.Where(p => p.textoCritica.Contains(SearchString)).ToList();
+}
+
+    public List<FuncModel> Users  { get; set; } = new();
+    public class FuncModel 
+    {
+        public string idUsuario;
+        public string nickUsuario;
+        public string nomeUsuario;
+        public string emailUsuario;
+        public string tokenCinema;
+
+        public string tipoUsuario;
+    }
+  bool ShowMessage = false;
+   bool ShowMessage2 = false;
+
+  private void ExcluirPostagem(string idFeedback)
+{
+   var postagem = Postagens.FirstOrDefault(p => p.idFilme == idFeedback);
+   if (postagem != null)
+   {
+       Postagens.Remove(postagem);
+   }
+}
+
 }
 
 
