@@ -1,0 +1,184 @@
+@page "/ListaFilmes"
+@using Newtonsoft.Json;
+@using System;
+@using System.Net.Http;
+@using System.Text;
+@using System.Text.Json;
+@using System.Threading.Tasks;
+
+@inject IHttpClientFactory ClientFactory
+
+<PageTitle>Cinemas</PageTitle>
+<body>
+<style>
+ @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+ /* Outros estilos */
+</style>
+
+
+<div class="container_pesquisa">
+    <button id="button_home">
+        <a href="ferqyfq.html">
+            <img src="~/Content/images/icon_home.png">
+        </a>
+    </button>
+
+    <button id="button_notificacao">
+        <a href="ferqyfq.html">
+            <img src="~/Content/images/icon_notificacao.png">
+        </a>
+
+    </button>
+
+    <div id="div_identificacao">
+        <img src="~/Content/images/Chagasperfil.png">
+        <p>Beatriz Chagas</p>
+        <div id="div_indifica_role">
+            <p>Linda</p>
+        </div>
+    </div>
+
+    <div id="divBusca">
+       <input type="text" id="txtBusca" @bind="SearchString" @bind:event="oninput">
+        <img id="imgBusca" src="~/Content/images/lupapesquisa.png" width="30px" alt="Buscar">
+    </div>
+</div>
+
+<div class="container_menu_content">
+    <div class="container_menu">
+        <nav class="menu">
+            <img id="framming_logo_menu" src="~/Content/images/framminglogo.png" />
+            <ul>
+                <div class="menu_container">
+                    <button id="button_cliente_menu">
+                        <li><a href="ListaFuncionarios"><img src="~/Content/images/icon_cliente.png"></a></li>
+                    </button>
+                    <button id="button_mensagens_menu">
+                        <li><a href="Verpostadm"><img src="~/Content/images/icon_mensagens.png"></a></li>
+                    </button>
+                    <button id="button_identificacao_menu">
+                        <li><a href="ListaUsuarios"><img src="~/Content/images/icon_identificacao.png"></a></li>
+                    </button>
+                    <button id="button_theater_menu">
+                        <li><a href="ListaCinemas"><img src="~/Content/images/theater.png"></a></li>
+                    </button>
+                </div>
+            </ul>
+            <ul>
+                <div class="buttons_sair_configuracao">
+                    <button id="button_sair_menu">
+                        <li><a href="#"><img src="~/Content/images/icon_saida.png"></a></li>
+                    </button>
+                    <button id="button_configuracao_menu">
+                        <li><a href="#"><img src="~/Content/images/configuracao.png"></a></li>
+                    </button>
+                </div>
+            </ul>
+        </nav>
+    </div>
+
+</div>
+
+<div class="container_content">
+    <div class="container_main">
+   
+        <center>
+            <div class="rotulos_usuarios">
+                <p class="beatriz">Nome</p>
+                <p class="beatriz">Lançamento</p>
+                <p class="beatriz">Id do Filme</p>
+                <div class="gap"></div>
+            </div>
+
+            <div class="inner-div">
+            @foreach(var filme in FilteredFilmes){
+                <div class="lista_usuarios">
+                    <p class="nome_usuario_nome">@filme.title</p>
+                    <p class="nome_usuario_nick">@filme.release_date</p>
+                    <p class="nome_usuario_email" data-id="${idUsuario}">@filme.id</p>
+               
+             
+
+                    <button class="button_alterar">
+                        <a href="CadSessao/@filme.id"><p>Adicionar Sessão</p></a>
+                    </button>
+                </div>
+
+                <div class="line-users"></div>
+                
+                }
+               
+            </div>
+
+        </center>
+    </div>
+
+
+
+</div>
+
+@if (ShowMessage2)
+{
+   <div class="succes_message2"></div>
+}
+
+@if (ShowMessage)
+{
+
+ <div class="succes_message" @onclick="HideSuccessMessages"><p>Cinema excluído com Sucesso!</p>
+  <button class="button_succes"><a href="ListaCinemas"><img src="~/Content/images/theater.png"></a>x</button>
+ </div>
+ 
+}
+
+</body>
+
+
+
+@code {
+    private string SearchString { get; set; }
+
+    public List<FilmeModel> Filmes { get; set; } = new();
+    public class FilmeModel 
+    {
+        public string title;
+        public string id;
+        public string release_date;
+
+    }
+
+     bool ShowMessage = false;
+   bool ShowMessage2 = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+
+    var client = ClientFactory.CreateClient();
+    HttpResponseMessage response = await client.GetAsync("https://framming-api.onrender.com/movies");
+    response.EnsureSuccessStatusCode();
+    string responseBody = await response.Content.ReadAsStringAsync();
+
+    Filmes = JsonConvert.DeserializeObject<List<FilmeModel>>(responseBody);
+    }
+}
+    
+    
+     @code {
+    private List<FilmeModel> FilteredFilmes
+ {
+     get
+     {
+         return string.IsNullOrEmpty(SearchString) ? Filmes : Filmes.Where(filme => 
+             filme.title.Contains(SearchString, StringComparison.OrdinalIgnoreCase) ||
+             filme.id.Contains(SearchString, StringComparison.OrdinalIgnoreCase) ||
+             filme.release_date.Contains(SearchString, StringComparison.OrdinalIgnoreCase)
+         ).ToList();
+     }
+ }
+   void HideSuccessMessages()
+   {
+       ShowMessage = false;
+       ShowMessage2 = false;
+   }
+}
+

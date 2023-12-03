@@ -5,6 +5,7 @@
 @using System.Text;
 @using System.Text.Json;
 @using System.Threading.Tasks;
+@inject NavigationManager NavigationManager
 
 @inject IHttpClientFactory ClientFactory
 
@@ -86,7 +87,7 @@
             <div class="rotulos_usuarios">
                 <p class="beatriz">Nome</p>
                 <p class="beatriz">Usuário</p>
-                <p class="beatriz">Email</p>
+                <p class="beatriz">Postagens</p>
                 <div class="gap"></div>
             </div>
 
@@ -95,10 +96,11 @@
                     <div class="lista_usuarios">
                     <p class="nome_usuario_nome">@user.nomeUsuario</p>
                     <p class="nome_usuario_nick">@user.nickUsuario</p>
-                    <p class="nome_usuario_email" data-id="${idUsuario}">@user.emailUsuario</p>
                     <button class="excluir_usu" @onclick="()=>DeleteUser(user.idUsuario)">X</button>
                    
-                
+                  <button class="button_alterar" @onclick="()=>RedirectToPostagem(user.idUsuario)">   
+                        <a href="Postagem"><p>Ver Postagens</p></a>
+                    </button>
 
                     </div>
 
@@ -174,7 +176,23 @@
        Console.WriteLine($"Error: {errorMessage}");
    }
 }
-    }
+}
+
+@code {
+  private UsuarioModel user = new UsuarioModel();
+
+  void RedirectToPostagem(string idUsuario)
+  {
+      NavigationManager.NavigateTo($"/Postagem?idUsuario={idUsuario}");
+  }
+
+  public class UsuarioModel
+  {
+      public string idUsuario { get; set; }
+      // Defina os outros campos aqui
+  }
+}
+    
 
       
   @code {
