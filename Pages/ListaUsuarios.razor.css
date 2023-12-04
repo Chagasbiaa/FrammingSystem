@@ -860,6 +860,11 @@ body {
     position: fixed;
 }
 
+.succes_message img{
+    margin-left: 263px;
+    margin-top: -280px;
+}
+
 .nome_usuario_email {
     display: flex;
     align-items: center;
@@ -1000,7 +1005,7 @@ body {
     }
 
     #button_sair_menu, #button_configuracao_menu {
-        margin-top: 9px;
+        margin-top: 108px;
     }
 
     .container_content {

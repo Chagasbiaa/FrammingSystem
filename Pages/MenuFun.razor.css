@@ -1,4 +1,5 @@
 
+
 body {
     background-color: #DEDEDE;
     font-family: Poppins;
@@ -209,6 +210,7 @@ body {
     #button_cliente_menu img {
         width: 45px;
         height: 45px;
+        opacity: 0.51;
     }
 
 #button_mensagens_menu {
@@ -227,6 +229,7 @@ body {
         width: 60px;
         height: 65px;
         opacity: 0.51;
+        margin-left: -6px;
     }
 
 
@@ -623,13 +626,14 @@ body {
         font-style: normal;
     }
 
-.calendar_container {
-    width: 23%;
-    height: 100%;
-    background: #FFF;
-    border-radius: 25px;
-}
-
+    .calendar_container {
+        width: 23%;
+        height: 100%;
+    
+        border-radius: 25px;
+        display: grid;
+        place-items: center;
+    }
 .container_both {
     width: 23%;
     height: 364px;

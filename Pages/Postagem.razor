@@ -20,7 +20,7 @@
     <main>
         <div class="container_pesquisa">
             <button id="button_home">
-                <a href="ferqyfq.html">
+                <a href=MenuAdm>
                     <img src="/images/icon_home.png">
                 </a>
             </button>
@@ -64,14 +64,8 @@
                     </button>
                 </div>
             </ul>
-            <ul>
-                <div class="buttons_sair_configuracao" style="margin-top:340px">
-                    <button id="button_sair_menu">
-                <li><a href="Login"><img src="/images/icon_saida.png"></a></li></button>
-                <button id="button_configuracao_menu">
-                <li><a href="#"><img src="/images/configuracao.png"></a></li></button>
-        </div>
-        </ul>
+           
+              
         </nav>
         </div>
 
@@ -238,6 +232,14 @@ private async Task GetPostagens()
        Postagens.Remove(postagem);
    }
 }
+
+ private void ChangeUser()
+   {
+       // Altere o usuário aqui
+
+       // Navegue para a página ListaUsuarios
+       NavigationManager.NavigateTo("/ListaUsuarios");
+   }
 
 }
 

@@ -18,57 +18,52 @@
 
 <div class="container_pesquisa">
     <button id="button_home">
-        <a href="ferqyfq.html">
-            <img src="~/Content/images/icon_home.png">
+        <a href=MenuFun>
+            <img src="/images/icon_home.png">
         </a>
     </button>
 
     <button id="button_notificacao">
         <a href="ferqyfq.html">
-            <img src="~/Content/images/icon_notificacao.png">
+            <img src="/images/icon_notificacao.png">
         </a>
 
     </button>
 
     <div id="div_identificacao">
-        <img src="~/Content/images/Chagasperfil.png">
-        <p>Chagas'Movies</p>
-        <div id="div_indifica_role">
-            <p>Funcinário</p>
-        </div>
+       <img src="/images/cinema.png">
+                <p>Chagas'Movies</p>
+                <div id="div_indifica_role">
+                    <p>Funcionário</p>
+                </div>
     </div>
 
     <div id="divBusca">
        <input type="text" id="txtBusca" @bind="SearchString" @bind:event="oninput">
-        <img id="imgBusca" src="~/Content/images/lupapesquisa.png" width="30px" alt="Buscar">
+        <img id="imgBusca" src="/images/lupapesquisa.png" width="30px" alt="Buscar">
     </div>
 </div>
 
 <div class="container_menu_content">
     <div class="container_menu">
         <nav class="menu">
-            <img id="framming_logo_menu" src="~/Content/images/framminglogo.png" />
+            <img id="framming_logo_menu" src="/images/framminglogo.png" />
             <ul>
-                <div class="menu_container">
-                   <button id="button_cliente_menu">
-                    <li><a href="ListaFuncionarios"><img src="/images/icon_cliente.png"></a></li>
-                    </button>
-                    <button id="button_mensagens_menu">
-                        <li><a href="ListaUsuarios"><img src="/images/icon_mensagens.png"></a></li>
-                    </button>
-                    
-                    <button id="button_theater_menu">
-                        <li><a href="ListaCinemas"><img src="/images/theater.png"></a></li>
-                    </button>
-                </div>
-            </ul>
+               <button id="button_mensagens_menu">
+                        <li><a href="ListaFilmes"><img src="/images/icon_mensagens.png"></a></li>
+                        </button>
+                        <div class="menu_container">
+                            <button id="button_cliente_menu" ><li><a href="ListaSessao"><img src="/images/cinema.png" style="margin-left :-9px"></a></li></button>    
+                        </div>
+                         
+                    </ul>
             <ul>
                 <div class="buttons_sair_configuracao" style="margin-top:300px">
                     <button id="button_sair_menu">
-                        <li><a href="#"><img src="~/Content/images/icon_saida.png"></a></li>
+                        <li><a href="#"><img src="/images/icon_saida.png"></a></li>
                     </button>
                     <button id="button_configuracao_menu">
-                        <li><a href="#"><img src="~/Content/images/configuracao.png"></a></li>
+                        <li><a href="#"><img src="/images/configuracao.png"></a></li>
                     </button>
                 </div>
             </ul>
@@ -76,6 +71,7 @@
     </div>
 
 </div>
+
 
 <div class="container_content">
     <div class="container_main">
@@ -124,7 +120,7 @@
 {
 
  <div class="succes_message" @onclick="HideSuccessMessages"><p>Cinema excluído com Sucesso!</p>
-  <button class="button_succes"><a href="ListaCinemas"><img src="~/Content/images/theater.png"></a>x</button>
+  <button class="button_succes"><a href="ListaCinemas"><img src="images/theater.png"></a>x</button>
  </div>
  
 }

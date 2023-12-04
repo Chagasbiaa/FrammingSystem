@@ -18,7 +18,7 @@
 
 <div class="container_pesquisa">
   <button id="button_home">
-    <a href="ferqyfq.html">
+    <a href=MenuAdm>
     <img src="/images/icon_home.png">
     </a>
   </button>
@@ -62,16 +62,7 @@
                     </button>
                 </div>
             </ul>
-      <ul>
-        <div class="buttons_sair_configuracao" style="margin-top:340px">
-          <button id="button_sair_menu">
-            <li><a href="#"><img src="/images/icon_saida.png"></a></li>
-          </button>
-          <button id="button_configuracao_menu">
-            <li><a href="#"><img src="/images/configuracao.png"></a></li>
-          </button>
-        </div>
-      </ul>
+      
     </nav>
 
   </div>
@@ -115,7 +106,7 @@
                                         <p id="codigo_email_p">Número de Salas :</p>
                                         <div class="input">
                                             <img id="email_func_img" src="/images/icon_numsalas.png" width="35px" />
-                                            <input @bind="@Input.NumSala"id="email_func" type="text" placeholder="10" required/>
+                                            <input @bind="@Input.NumSala"id="email_func" type="password" placeholder="10" required/>
                                         </div> 
                                     </div>
 
@@ -123,7 +114,7 @@
                                         <p id="codigo_senha_p">Código do Cinema:</p>
                                         <div class="input">
                                             <img id="senha_func_img" src="/images/icon_chave.png" width="35px">
-                                            <input @bind="@Input.Codigocine" id="senha_func" type="text" placeholder="*******" required/>
+                                            <input @bind="@Input.Codigocine" id="senha_func" type="password" placeholder="*******" required/>
                                         </div>
                                     </div>
 

@@ -17,7 +17,7 @@
 
 <div class="container_pesquisa">
     <button id="button_home">
-        <a href="ferqyfq.html">
+        <a href="MenuFun">
             <img src="/images/icon_home.png">
         </a>
     </button>
@@ -30,11 +30,11 @@
     </button>
 
     <div id="div_identificacao">
-        <img src="/images/Chagasperfil.png">
-        <p>Chagas'Movies</p>
-        <div id="div_indifica_role">
-            <p>Fucionário</p>
-        </div>
+        <img src="/images/cinema.png">
+                <p>Chagas'Movies</p>
+                <div id="div_indifica_role">
+                    <p>Funcionário</p>
+                </div>
     </div>
 
     <div id="divBusca">
@@ -46,11 +46,15 @@
 <div class="container_menu_content">
     <div class="container_menu">
         <nav class="menu">
-            <img id="framming_logo_menu" src="/images/framminglogo.png" />
+            <img id="framming_logo_menu" src="/images/framminglogo.png" a href="MenuFun"/>
 <ul>
+                        <button id="button_mensagens_menu">
+                        <li><a href="ListaFilmes"><img src="/images/icon_mensagens.png"></a></li>
+                        </button>
                         <div class="menu_container">
                             <button id="button_cliente_menu" ><li><a href="ListaSessao"><img src="/images/cinema.png" style="margin-left :-9px"></a></li></button>    
                         </div>
+                         
                     </ul>
             <ul>
                 <div class="buttons_sair_configuracao" style="margin-top:300px">
@@ -70,13 +74,13 @@
 <div class="container_content">
     <div class="container_main">
        <button class="cadastrar_novo_cinema">
-        <a href ="/cadsessao" class="cadastrar_novo_cinema_a">Cadastrar nova Sessão</a>
+        <a href ="/ListaFilmes" class="cadastrar_novo_cinema_a">Cadastrar nova Sessão</a>
         </button>
        <center>
            <div class="rotulos_usuarios">
                <p class="beatriz">Nome</p>
-               <p class="beatriz">Salas</p>
-               <p class="beatriz">Código</p>
+               <p class="beatriz">Sala</p>
+               <p class="beatriz">Horário</p>
                <div class="gap"></div>
            </div>
 
@@ -104,8 +108,9 @@
 @if (ShowMessage)
 {
 
- <div class="succes_message" @onclick="HideSuccessMessages"><p>Cinema excluído com Sucesso!</p>
-  <button class="button_succes"><a href="ListaCinemas"><img src="/images/theater.png"></a>x</button>
+ <div class="succes_message" @onclick="HideSuccessMessages"><p>Sessão excluída com Sucesso!</p>
+  <button class="button_succes"><a href="ListaCinemas"></a>x</button>
+  <img src="/images/confere.png"/>
  </div>
  
 }
@@ -139,13 +144,14 @@
   }
 
         public async Task DeleteSessao(string id){
-        var client = ClientFactory.CreateClient();
-       var response = await client.PostAsync($"https://framming-api.onrender.com/deleteSession/211/idSession/{id}",null);
-      
-   
-        Sessoes.RemoveAll(sessao => sessao.idSessao == id);
+   var client = ClientFactory.CreateClient();
+   var response = await client.PostAsync($"https://framming-api.onrender.com/deleteSession/211/{id}",null);
 
-         if (response.IsSuccessStatusCode)
+   Console.WriteLine($"Response status code: {response.StatusCode}");
+
+   Sessoes.RemoveAll(sessao => sessao.idSessao == id);
+
+   if (response.IsSuccessStatusCode)
    {
        ShowMessage2 = true;
        ShowMessage = true;
@@ -198,5 +204,5 @@ public async Task<string> GetMovieTitle(string movieId)
        ShowMessage2 = false;
    }
 }
-}
+
 

@@ -20,7 +20,7 @@
 
 <div class="container_pesquisa">
             <button id="button_home">
-                <a href="ferqyfq.html">
+                <a href=MenuFun>
                     <img src="/images/icon_home.png">
                 </a>
             </button>
@@ -33,8 +33,8 @@
             </button>
 
             <div id="div_identificacao">
-                <img src="/images/Chagasperfil.png">
-                <p>Beatriz Chagas</p>
+               <img src="/images/cinema.png">
+                <p>Chagas'Movies</p>
                 <div id="div_indifica_role">
                     <p>Funcionário</p>
                 </div>
@@ -52,21 +52,18 @@
                 <nav class="menu">
                     <img id="framming_logo_menu" src="/images/framminglogo.png" />
                     <ul>
-                <div class="menu_container">
-                   <button id="button_cliente_menu">
-                    <li><a href="ListaFuncionarios"><img src="/images/icon_cliente.png"></a></li>
-                    </button>
+                        <div class="menu_container">
                     <button id="button_mensagens_menu">
-                        <li><a href="ListaUsuarios"><img src="/images/icon_mensagens.png"></a></li>
+                        <li><a href="ListaFilmes"><img src="/images/icon_mensagens.png"></a></li>
                     </button>
                     
                     <button id="button_theater_menu">
-                        <li><a href="ListaCinemas"><img src="/images/theater.png"></a></li>
+                        <li><a href="ListaSessao"><img src="/images/theater.png"></a></li>
                     </button>
                 </div>
             </ul>
             <ul>
-                <div class="buttons_sair_configuracao" style="margin-top:340px">
+                <div class="buttons_sair_configuracao">
                     <button id="button_sair_menu">
                 <li><a href="#"><img src="/images/icon_saida.png"></a></li></button>
                 <button id="button_configuracao_menu">
@@ -79,7 +76,7 @@
         <div class="container_content">
             <div class="container_main">
                 <div class="codigo_cinema">
-                    <img id="foto_codigo_func" src="/images/icon_identifica_func.png" />
+                    <img id="foto_codigo_func" src="/icon_identifica_func.png" />
                     <p id="cod_cinema_p">Código Cinema: @Input.Filme</p>
                     <p id="cod_nome_p">Nome: @Input.Data</p>
                     <p id="cod_email_p">Email: @Input.Horario</p>
@@ -87,33 +84,34 @@
                      <p id="cod_senha_p">Senha: @Input.Salasessao</p>
                 </div>
 
-                <p id="codigo_cadastro_func_p">Cadastro de Sessão</p>
+                <p id="codigo_cadastro_func_p">Cadastro de Funcionário</p>
 
 
                 <p id="codigo_func_p">Filme:</p>
                 <p id="codigo_func_result"></p>
                 <input @bind="@Input.Filme" id="codigo_func" type="text" placeholder="0000" disabled>
-                <img id="codigo_func_img" src="/images/icon_codigo.png" width="35px">
+                <img id="codigo_func_img" src="/icon_codigo.png" width="35px">
 
                 <p id="codigo_nome_p">Data:</p>
                 <p id="codigo_nome_result"></p>
-                <input @bind="@Input.Data" id="nome_func" type="text" placeholder="Nome" />
+                <input @bind="@Input.Data" id="nome_func" type="text" placeholder="12/02/2023" />
                 <img id="nome_func_img" src="/images/icon_theater.png" width="35px">
 
                 <p id="codigo_email_p">Horário:</p>
                 <p id="codigo_email_result"></p>
-                <input @bind="@Input.Horario" id="email_func" type="text" placeholder="exemplo@email.com" />
+                <input @bind="@Input.Horario" id="email_func" type="text" placeholder="14:40" />
                 <img id="email_func_img" src="/images/icon_email.png" width="35px">
 
                 <p id="codigo_senha_p">Quantidade de ingresso:</p>
                 <p id="codigo_senha_result"></p>
-                <input @bind="@Input.qtsingresso" id="senha_func" type="text" placeholder="*******" />
+                <input @bind="@Input.qtsingresso" id="senha_func" type="text" placeholder="74" />
                 <img id="senha_func_img" src="/images/icon_chave.png" width="35px">
 
                 <p id="codigo_Confime_p">Sala da Sessão:</p>
-                <input @bind="@Input.Salasessao"id="confirma_senha_func" type="text" img src="img/lupapesquisa.png" placeholder="*******" />
+                <input @bind="@Input.Salasessao"id="confirma_senha_func" type="8" img src="img/lupapesquisa.png" placeholder="*******" />
                 <img id="confirma_senha_func_img" src="/images/icon_chave.png" width="35px">
 
+  
                 <button @onclick="Submit" id="cadastre_func">Cadastrar</button>
             </div>
             </div>
@@ -128,7 +126,8 @@
 {
 
  <div class="succes_message"><p>Sessão Cadastrada com Sucesso!</p>
-  <button class="button_succes"><a href="ListaSessao"><img src="/images/theater.png"></a>x</button>
+  <button class="button_succes"><a href="ListaSessao">x</a></button>
+ <img src="/images/confere.png"/>
  </div>
  
 }

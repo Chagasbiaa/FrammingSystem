@@ -31,7 +31,7 @@
  <section class="card-section__account-section">
      <header class="account-section__header">
          <div class="header__account-div">
-           <a href="/Login" rel="noreferrer" class="account-div__link">Login</a>
+           <a href="/Login" rel="noreferrer" class="account-div__link">Bem Vindo</a>
          </div>
      </header>
     <EditForm Model="@this" OnValidSubmit="OnValidSubmit">
@@ -39,12 +39,12 @@
        <ValidationSummary />
          <div class="form__input-div">
            <p class="input-div__label">Email</p>
-           <InputText id="inputEmail" @bind-Value="user.Email" type="email" class="input-div__input" placeholder="example@email.com" style="border: none; width:98%; background:none; outline:none;"/>
+          <InputText id="inputEmail" @bind-Value="user.Email" type="email" class="input-div__input" placeholder="example@email.com" style="border: none; width:98%; background:none; outline:none;"/>
          </div>
          <br>
          <div class="form__input-div">
            <label for="inputPassword" class="input-div__label">Senha</label>
-            <InputText id="inputPassword" @bind-Value="user.Password" type="password" class="input-div__input" placeholder="********" style="border: none; width:98%; background:none; outline:none;"/>
+           <InputText id="inputPassword" @bind-Value="user.Password" type="password" class="input-div__input" placeholder="****"  style="border: none; width:98%; background:none; outline:none;"/>
            <label for="inputPassword" class="input-div__label-see-password"><img src="/images/see-password-icon.png" alt="See Password Icon" /></label>
          </div>
          <div class="form__password-info-div">

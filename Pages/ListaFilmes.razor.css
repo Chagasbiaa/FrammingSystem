@@ -269,7 +269,7 @@ body {
     #button_mensagens_menu img {
         width: 60px;
         height: 65px;
-        opacity: 0.51;
+        margin-left: -6px;
     }
 
 
@@ -988,7 +988,7 @@ body {
     }
 
     #button_sair_menu, #button_configuracao_menu {
-        margin-top: 9px;
+        margin-top: 108px;
     }
 
     .container_content {
