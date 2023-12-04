@@ -18,19 +18,19 @@
 <div class="container_pesquisa">
   <button id="button_home">
     <a href="ferqyfq.html">
-      <img src="~/Content/images/icon_home.png">
+      <img src="/images/icon_home.png">
     </a>
   </button>
 
   <button id="button_notificacao">
     <a href="ferqyfq.html">
-      <img src="~/Content/images/icon_notificacao.png">
+      <img src="/images/icon_notificacao.png">
     </a>
 
   </button>
 
   <div id="div_identificacao">
-    <img src="~/Content/images/Chagasperfil.png">
+    <img src="/images/Chagasperfil.png">
     <p>Beatriz Chagas</p>
     <div id="div_indifica_role">
       <p>Linda</p>
@@ -38,38 +38,38 @@
   </div>
 
   <div id="divBusca">
-    <input type="text" id="txtBusca" img src="~/Content/images/lupapesquisa.png">
-    <img id="imgBusca" src="~/Content/images/lupapesquisa.png" width="30px" alt="Buscar">
+    <input type="text" id="txtBusca" img src="/images/lupapesquisa.png">
+    <img id="imgBusca" src="/images/lupapesquisa.png" width="30px" alt="Buscar">
   </div>
 </div>
 
 <div class="container_menu_content">
   <div class="container_menu">
     <nav class="menu">
-      <img id="framming_logo_menu" src="~/Content/images/framminglogo.png" />
+      <img id="framming_logo_menu" src="/images/framminglogo.png" />
       <ul>
         <div class="menu_container">
                     <button id="button_cliente_menu">
-                        <li><a href="ListaFuncionarios"><img src="~/Content/images/icon_cliente.png"></a></li>
+                        <li><a href="ListaFuncionarios"><img src="/images/icon_cliente.png"></a></li>
                     </button>
                     <button id="button_mensagens_menu">
-                        <li><a href="Verpostadm"><img src="~/Content/images/icon_mensagens.png"></a></li>
+                        <li><a href="Verpostadm"><img src="/images/icon_mensagens.png"></a></li>
                     </button>
                     <button id="button_identificacao_menu">
-                        <li><a href="ListaUsuarios"><img src="~/Content/images/icon_identificacao.png"></a></li>
+                        <li><a href="ListaUsuarios"><img src="/images/icon_identificacao.png"></a></li>
                     </button>
                     <button id="button_theater_menu">
-                        <li><a href="ListaCinemas"><img src="~/Content/images/theater.png"></a></li>
+                        <li><a href="ListaCinemas"><img src="/images/theater.png"></a></li>
                     </button>
                 </div>
       </ul>
       <ul>
         <div class="buttons_sair_configuracao">
           <button id="button_sair_menu">
-            <li><a href="#"><img src="~/images/icon_saida.png"></a></li>
+            <li><a href="#"><img src="/images/icon_saida.png"></a></li>
           </button>
           <button id="button_configuracao_menu">
-            <li><a href="#"><img src="~/images/configuracao.png"></a></li>
+            <li><a href="#"><img src="/images/configuracao.png"></a></li>
           </button>
         </div>
       </ul>
@@ -79,7 +79,7 @@
   <div class="container_content">
     <div class="container_main">
       <div class="codigo_cinema">
-        <img id="foto_codigo_func" src="~/Content/images/icon_identifica_func.png" />
+        <img id="foto_codigo_func" src="/images/icon_identifica_func.png" />
         <p id="cod_cinema_p">Localidade: @Input.Localidade</p>
         <p id="cod_nome_p">Nome: @Input.Nome</p>
         <p id="cod_email_p">Salas: @Input.NumSala</p>
@@ -93,27 +93,27 @@
       <p id="codigo_func_p">Localidade:</p>
       <p id="codigo_func_result"></p>
       <input @bind="@Input.Localidade" id="codigo_func"  type="text" placeholder="Av. Guimarães, N°12">
-      <img id="codigo_func_img" src="~/Content/images/icon_local.png" width="35px" />
+      <img id="codigo_func_img" src="/images/icon_local.png" width="35px" />
 
       <p id="codigo_nome_p">Nome:</p>
       <p id="codigo_nome_result"></p>
       <input @bind="@Input.Nome"id="nome_func" type="text" placeholder="Uci Cinemas" />
-      <img id="nome_func_img" src="~/Content/images/icon_theater.png" width="35px" />
+      <img id="nome_func_img" src="/images/icon_theater.png" width="35px" />
 
       <p id="codigo_email_p">Número de Salas :</p>
       <p id="codigo_email_result"></p>
       <input @bind="@Input.NumSala"id="email_func" type="text" placeholder="10" />
-      <img id="email_func_img" src="~/Content/images/icon_numsalas.png" width="35px" />
+      <img id="email_func_img" src="/images/icon_numsalas.png" width="35px" />
 
       <p id="codigo_senha_p">Senha:</p>
       <p id="codigo_senha_result"></p>
       <input @bind="@Input.Codigocine" id="senha_func" type="text" placeholder="*******" />
-      <img id="senha_func_img" src="~/Content/images/icon_chave.png" width="35px">
+      <img id="senha_func_img" src="/images/icon_chave.png" width="35px">
 
 
       <input type="file" id="fileInput" style="display: none;" accept="image/*" />
       <button id="choose_img" onclick="openFileExplorer()" style="background: none; border: none; cursor: pointer;">
-        <img src="~/Content/images/foto_cadastro_func.png" id="imagePreview" />
+        <img src="/images/foto_cadastro_func.png" id="imagePreview" />
       </button>
 
       <button @onclick="Submit" id="cadastre_func">Cadastrar</button>
@@ -129,7 +129,7 @@
 {
 
  <div class="succes_message"><p>Cinema Cadastrado com Sucesso!</p>
-  <button class="button_succes"><a href="ListaCinemas"><img src="~/Content/images/theater.png"></a>x</button>
+  <button class="button_succes"><a href="ListaCinemas"><img src="/images/theater.png"></a>x</button>
  </div>
  
 }

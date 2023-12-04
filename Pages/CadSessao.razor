@@ -19,19 +19,19 @@
 <div class="container_pesquisa">
             <button id="button_home">
                 <a href="ferqyfq.html">
-                    <img src="~/Content/images/icon_home.png">
+                    <img src="~/images/icon_home.png">
                 </a>
             </button>
 
             <button id="button_notificacao">
                 <a href="ferqyfq.html">
-                    <img src="~/Content/images/icon_notificacao.png">
+                    <img src="/images/icon_notificacao.png">
                 </a>
 
             </button>
 
             <div id="div_identificacao">
-                <img src="~/Content/images/Chagasperfil.png">
+                <img src="/images/Chagasperfil.png">
                 <p>Beatriz Chagas</p>
                 <div id="div_indifica_role">
                     <p>Linda</p>
@@ -39,8 +39,8 @@
             </div>
 
             <div id="divBusca">
-                <input type="text" id="txtBusca" img src="~/Content/images/lupapesquisa.png">
-                <img id="imgBusca" src="~/Content/images/lupapesquisa.png" width="30px" alt="Buscar">
+                <input type="text" id="txtBusca" img src="/images/lupapesquisa.png">
+                <img id="imgBusca" src="/images/lupapesquisa.png" width="30px" alt="Buscar">
             </div>
         </div>
         
@@ -48,29 +48,29 @@
         <div class="container_menu_content">
             <div class="container_menu">
                 <nav class="menu">
-                    <img id="framming_logo_menu" src="~/Content/images/framminglogo.png" />
+                    <img id="framming_logo_menu" src="/images/framminglogo.png" />
                     <ul>
                         <div class="menu_container">
                     <button id="button_cliente_menu">
-                        <li><a href="ListaFuncionarios"><img src="~/Content/images/icon_cliente.png"></a></li>
+                        <li><a href="ListaFuncionarios"><img src="/images/icon_cliente.png"></a></li>
                     </button>
                     <button id="button_mensagens_menu">
-                        <li><a href="Verpostadm"><img src="~/Content/images/icon_mensagens.png"></a></li>
+                        <li><a href="Verpostadm"><img src="/images/icon_mensagens.png"></a></li>
                     </button>
                     <button id="button_identificacao_menu">
-                        <li><a href="ListaUsuarios"><img src="~/Content/images/icon_identificacao.png"></a></li>
+                        <li><a href="ListaUsuarios"><img src="/images/icon_identificacao.png"></a></li>
                     </button>
                     <button id="button_theater_menu">
-                        <li><a href="ListaCinemas"><img src="~/Content/images/theater.png"></a></li>
+                        <li><a href="ListaCinemas"><img src="/images/theater.png"></a></li>
                     </button>
                 </div>
             </ul>
             <ul>
                 <div class="buttons_sair_configuracao">
                     <button id="button_sair_menu">
-                <li><a href="#"><img src="~/Content/images/icon_saida.png"></a></li></button>
+                <li><a href="#"><img src="/images/icon_saida.png"></a></li></button>
                 <button id="button_configuracao_menu">
-                <li><a href="#"><img src="~/Content/images/configuracao.png"></a></li></button>
+                <li><a href="#"><img src="/images/configuracao.png"></a></li></button>
         </div>
         </ul>
         </nav>
@@ -79,7 +79,7 @@
         <div class="container_content">
             <div class="container_main">
                 <div class="codigo_cinema">
-                    <img id="foto_codigo_func" src="~/Content/images/icon_identifica_func.png" />
+                    <img id="foto_codigo_func" src="/images/icon_identifica_func.png" />
                     <p id="cod_cinema_p">Código Cinema: @Input.Filme</p>
                     <p id="cod_nome_p">Nome: @Input.Data</p>
                     <p id="cod_email_p">Email: @Input.Horario</p>
@@ -93,26 +93,26 @@
                 <p id="codigo_func_p">Filme:</p>
                 <p id="codigo_func_result"></p>
                 <input @bind="@Input.Filme" id="codigo_func" type="text" placeholder="0000">
-                <img id="codigo_func_img" src="~/Content/images/icon_codigo.png" width="35px">
+                <img id="codigo_func_img" src="/images/icon_codigo.png" width="35px">
 
                 <p id="codigo_nome_p">Data:</p>
                 <p id="codigo_nome_result"></p>
                 <input @bind="@Input.Data" id="nome_func" type="text" placeholder="Nome" />
-                <img id="nome_func_img" src="~/Content/images/icon_theater.png" width="35px">
+                <img id="nome_func_img" src="/images/icon_theater.png" width="35px">
 
                 <p id="codigo_email_p">Horário:</p>
                 <p id="codigo_email_result"></p>
                 <input @bind="@Input.Horario" id="email_func" type="text" placeholder="exemplo@email.com" />
-                <img id="email_func_img" src="~/Content/images/icon_email.png" width="35px">
+                <img id="email_func_img" src="/images/icon_email.png" width="35px">
 
                 <p id="codigo_senha_p">Quantidade de ingresso:</p>
                 <p id="codigo_senha_result"></p>
                 <input @bind="@Input.qtsingresso" id="senha_func" type="text" placeholder="*******" />
-                <img id="senha_func_img" src="~/Content/images/icon_chave.png" width="35px">
+                <img id="senha_func_img" src="/images/icon_chave.png" width="35px">
 
                 <p id="codigo_Confime_p">Sala da Sessão:</p>
                 <input @bind="@Input.Salasessao"id="confirma_senha_func" type="text" img src="img/lupapesquisa.png" placeholder="*******" />
-                <img id="confirma_senha_func_img" src="~/Content/images/icon_chave.png" width="35px">
+                <img id="confirma_senha_func_img" src="/images/icon_chave.png" width="35px">
 
                 <button @onclick="Submit" id="cadastre_func">Cadastrar</button>
             </div>
@@ -128,7 +128,7 @@
 {
 
  <div class="succes_message"><p>Sessão Cadastrada com Sucesso!</p>
-  <button class="button_succes"><a href="ListaSessao"><img src="~/Content/images/theater.png"></a>x</button>
+  <button class="button_succes"><a href="ListaSessao"><img src="/images/theater.png"></a>x</button>
  </div>
  
 }
