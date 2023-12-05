@@ -54,7 +54,7 @@
                     <li><a href="ListaFuncionarios"><img src="/images/icon_cliente.png"></a></li>
                     </button>
                     <button id="button_mensagens_menu">
-                        <li><a href="Postagem"><img src="/images/icon_mensagens.png"></a></li>
+                        <li><a href="ListaUsuarios "><img src="/images/icon_mensagens.png"></a></li>
                     </button>
                     <button id="button_identificacao_menu">
                         <li><a href="ListaUsuarios"><img src="/images/icon_identificacao.png"></a></li>
@@ -192,50 +192,50 @@
     bool ObligationMessage = false;
 
    
+public async Task Submit()
+{
+   // Validate that all inputs are filled
+   if (string.IsNullOrEmpty(Input.Codigo) || 
+       string.IsNullOrEmpty(Input.Email) || 
+       string.IsNullOrEmpty(Input.Nome) || 
+       string.IsNullOrEmpty(Input.Senha))
+   {
+           ObligationMessage = true;
+           return;
+   }
 
-    public async Task Submit()
-    {
-    // Validate that all inputs are filled
-    if (string.IsNullOrEmpty(Input.Codigo) || 
-        string.IsNullOrEmpty(Input.Email) || 
-        string.IsNullOrEmpty(Input.Nome) || 
-        string.IsNullOrEmpty(Input.Senha))
-    {
-            ObligationMessage = true;
-            return;
-    }
+   Console.WriteLine("Test");
+   var client = ClientFactory.CreateClient();
 
-    Console.WriteLine("Test");
-    var client = ClientFactory.CreateClient();
+   using StringContent jsonContent = new(
+       JsonSerializer.Serialize(new
+       {
+           codCinema = Input.Codigo,
+           name = Input.Nome,
+           username = Input.Nome,
+           email = Input.Email,
+           password = Input.Senha,
+           userType = "fun"
+       }),
+       Encoding.UTF8,
+       "application/json");
 
-    using StringContent jsonContent = new(
-        JsonSerializer.Serialize(new
-        {
-            codCinema = Input.Codigo,
-            name = Input.Nome,
-            username = Input.Nome,
-            email = Input.Email,
-            password = Input.Senha,
-            userType = "fun"
-        }),
-        Encoding.UTF8,
-        "application/json");
+   Console.WriteLine($"teste => {jsonContent}");
 
-    Console.WriteLine($"teste => {jsonContent}");
+   var response = await client.PostAsync("https://framming-api.onrender.com/users/register", jsonContent);
 
-    var response = await client.PostAsync("https://framming-api.onrender.com/users/register", jsonContent);
-
-    if (response.IsSuccessStatusCode)
-    {
-        ShowMessage = true;
-        ShowMessage2 = true;
-    }
-    else
-    {
-        var errorMessage = await response.Content.ReadAsStringAsync();
-        Console.WriteLine($"Error: {errorMessage}");
-    }
-    }
+   if (response.IsSuccessStatusCode)
+   {
+       ShowMessage = true;
+       ShowMessage2 = true;
+       Console.WriteLine("Funcionário cadastrado com sucesso");
+   }
+   else
+   {
+       var errorMessage = await response.Content.ReadAsStringAsync();
+       Console.WriteLine($"Error: {errorMessage}");
+   }
+}
 
     public void CloseWindow()
    {

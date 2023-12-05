@@ -99,12 +99,12 @@ private async Task OnValidSubmit()
        var result = JsonConvert.DeserializeObject<User>(await response.Content.ReadAsStringAsync());
        if (result.tipoUsuario == "adm")
        {
-           NavigationManager.NavigateTo("/cad_func");
+           NavigationManager.NavigateTo("/MenuAdm");
        }
        else if (result.tipoUsuario == "fun")
        {
-           NavigationManager.NavigateTo("/ListaSessao");
-       }
+      NavigationManager.NavigateTo("/MenuFun");
+      }
        else
        {
            ErrorMessage = "Tipo de usuário desconhecido.";
