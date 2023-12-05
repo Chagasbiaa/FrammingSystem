@@ -585,8 +585,8 @@ body {
     height: 78vh;
     border-radius: 28px;
     grid-column: 3;
-    margin-left: 224px;
-    margin-top: 30px;
+    margin-left: 230px;
+    margin-top: 10px;
 }
 
 .presentation{
@@ -600,7 +600,6 @@ body {
 .introduction {
     background: #F3AEAE;
     width: 74%;
-    margin-left: 273px;
     border-radius: 25px;
     display: flex;
     flex-direction: row;
@@ -614,6 +613,7 @@ body {
         color: #FFF;
         font-family: Poppins;
         font-size: 40px;
+        font-weight: bolder;
     }
 
     .introduction h3 {
@@ -719,7 +719,6 @@ body {
     flex-direction: row;
     justify-content: flex-start;
     align-items: flex-end;
-    margin-left: 273px;
 }
 
 .manager_employee span, .manager_publication span {
@@ -730,6 +729,10 @@ body {
     place-items: center;
     border-radius: 40px;
     margin-top: -30px
+}
+
+.manager_employee h1, .manager_publication h1 {
+    margin: 20px;
 }
 
 .manager_employee button, .manager_publication button {
@@ -959,259 +962,3 @@ body {
 
 
 
-@media screen and (min-width:961px) {
-    #foto_cadastro_func {
-        grid-column: 12;
-        margin-left: 100px;
-    }
-
-    #cadastre_func {
-        grid-column: 12;
-        margin-left: 70px;
-    }
-
-    #codigo_func, #nome_func, #email_func, #senha_func, #confirma_senha_func {
-        width: 425px;
-        grid-column: 7;
-    }
-
-    .codigo_cinema {
-        grid-row: 3;
-        width: 372px;
-    }
-
-    #button_sair_menu, #button_configuracao_menu {
-        margin-top: 70px
-    }
-
-    .container_pesquisa {
-        margin-left: 40px;
-    }
-}
-
-@media screen and (min-width:751px) {
-    #button_sair_menu, #button_configuracao_menu {
-        margin-top: -75px;
-    }
-
-    .codigo_cinema {
-        width: 319px;
-        height: 510px;
-        grid-row: 2;
-        margin-top: 10px;
-        margin-left: -20px;
-    }
-
-    .container_content {
-        margin-top: 3px;
-        margin-left: -2px;
-    }
-
-    .container_pesquisa {
-        padding-left: 150px;
-    }
-
-    #div_identificação {
-        margin-left: -42px;
-    }
-
-    #button_notificacao {
-        margin-left: -59px;
-    }
-
-    #codigo_func {
-        grid-row: 5;
-        grid-column: 6;
-        margin-left: -30px;
-        width: 400px;
-    }
-
-    #nome_func {
-        grid-row: 8;
-        grid-column: 6;
-        margin-left: -30px;
-        width: 400px;
-    }
-
-    #email_func {
-        grid-row: 11;
-        grid-column: 6;
-        margin-left: -30px;
-        width: 400px;
-    }
-
-    #senha_func {
-        grid-row: 14;
-        grid-column: 6;
-        margin-left: -30px;
-        width: 400px;
-    }
-
-    #confirma_senha_func {
-        grid-row: 17;
-        grid-column: 6;
-        margin-left: -30px;
-        width: 400px;
-    }
-
-    #codigo_cadastro_func_p {
-        grid-column: 7;
-    }
-
-    #codigo_func_p {
-        font-size: 15px;
-        grid-column: 6;
-        margin-left: -46px;
-        margin-top: 11px;
-    }
-
-    #codigo_email_p {
-        grid-column: 5;
-        margin-left: 3px;
-        margin-top: -45px;
-        font-size: 15px;
-    }
-
-    #codigo_nome_p {
-        grid-column: 6;
-        font-size: 15px;
-        margin-left: -95px;
-        margin-top: -20px;
-    }
-
-    #codigo_senha_p {
-        margin-left: -92px;
-        margin-top: -76px;
-        font-size: 15px
-    }
-
-    #codigo_Confime_p {
-        margin-left: -50px;
-        margin-top: -105px;
-        font-size: 15px
-    }
-
-    #foto_cadastro_func {
-        grid-column: 10;
-        margin-left: 68px;
-    }
-
-    #cadastre_func {
-        grid-column: 10;
-        margin-left: 32px;
-    }
-
-    .container_content {
-        margin-left: -38px;
-    }
-
-    .menu {
-        margin-left: -13px;
-    }
-
-    .container_main {
-        width: 100px;
-    }
-}
-
-@media screen and (min-width:723.33px) {
-
-    #button_sair_menu, #button_configuracao_menu {
-        margin-top: -95px;
-    }
-
-    #button_configuracao_menu {
-        margin-top: -97px;
-    }
-
-    .codigo_cinema {
-        width: 278px;
-        margin-top: -3px;
-        margin-left: -60px;
-    }
-
-    #foto_codigo_func {
-    }
-
-    #codigo_func_p {
-        margin-left: -167px;
-    }
-
-    #codigo_nome_p {
-        margin-left: -217px;
-    }
-
-    #codigo_email_p {
-        margin-left: -118px;
-    }
-
-    #codigo_senha_p {
-        margin-left: -215px;
-    }
-
-    #codigo_Confime_p {
-        margin-left: -167px;
-    }
-
-    #codigo_func, #nome_func, #email_func, #senha_func, #confirma_senha_func {
-        margin-left: -150px;
-        width: 353px;
-    }
-
-    #codigo_cadastro_func_p {
-        grid-column: 6;
-        margin-left: -41px;
-    }
-
-    #cod_nome_p, #cod_email_p, #cod_senha_p, #cod_cinema_p {
-        font-size: 17px;
-    }
-
-    #cadastre_func {
-        grid-column: 10;
-        margin-left: -65px;
-    }
-
-    #codigo_func_img {
-        margin-left: -244px;
-    }
-
-    #nome_func_img {
-        margin-left: -341px;
-    }
-
-    #email_func_img {
-        margin-top: 303px;
-        margin-left: -442px;
-    }
-
-    #senha_func_img {
-        margin-top: 388px;
-        margin-left: -542px;
-    }
-
-    #confirma_senha_func_img {
-        margin-top: 475px;
-        margin-left: -642px;
-    }
-
-    #foto_cadastro_func {
-        margin-left: -24px;
-    }
-
-    #txtBusca {
-        width: 473px;
-    }
-
-    #divBusca {
-        width: 532px
-    }
-
-    #button_notificacao {
-        margin-left: 8px;
-    }
-
-    #div_identificacao {
-        margin-left: -10px;
-    }
-}
