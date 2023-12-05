@@ -51,10 +51,10 @@
       <ul>
         <div class="menu_container">
                     <button id="button_cliente_menu">
-                        <li><a href="ListaFuncionarios"><img src="/images/icon_cliente.png"></a></li>
+                    <li><a href="ListaFuncionarios"><img src="/images/icon_cliente.png"></a></li>
                     </button>
                     <button id="button_mensagens_menu">
-                        <li><a href="ListaPostagem"><img src="/images/icon_mensagens.png"></a></li>
+                        <li><a href="Postagem"><img src="/images/icon_mensagens.png"></a></li>
                     </button>
                     <button id="button_identificacao_menu">
                         <li><a href="ListaUsuarios"><img src="/images/icon_identificacao.png"></a></li>
@@ -77,49 +77,70 @@
     </nav>
 
   </div>
+
   <div class="container_content">
-    <div class="container_main">
-      <div class="codigo_cinema">
-        <img id="foto_codigo_func" src="/images/icon_identifica_func.png" />
-        <p id="cod_cinema_p">Localidade: @Input.Localidade</p>
-        <p id="cod_nome_p">Nome: @Input.Nome</p>
-        <p id="cod_email_p">Salas: @Input.NumSala</p>
-         <p id="cod_senha_p">Código do cinema:@Input.Codigocine</p>
+                <div class="container_melhor">
+                    <div class="container_dados">
+                        <div class="dados">
+                            <img id="foto_codigo_func" src="/images/icon_identifica_func.png" required/>
+                            <span style="width:85%; margin-top:10px">
+                                <p id="cod_cinema_p">Localidade: @Input.Localidade</p>
+                                <p id="cod_nome_p">Nome: @Input.Nome</p>
+                                <p id="cod_email_p">Salas: @Input.NumSala</p>
+                                <p id="cod_senha_p">Código do cinema:@Input.Codigocine</p>
+                            </span>
+                            
+                        </div>
+                    </div>
+                    <div class="container_cadastro">
+                        <div class="titulo_func"><p>Cadastro de Cinema</p></div>
+                        <form class="container_form">
+                            
+                                <div class="container_inputs">
+                                    <div class="inputs">
+                                        <p id="codigo_func_p">Localidade:</p>
+                                        <div class="input">
+                                            <img id="codigo_func_img" src="/images/icon_local.png" width="35px" />
+                                            <input @bind="@Input.Localidade" id="codigo_func"  type="text" placeholder="Av. Guimarães, N°12" required>
+                                        </div> 
+                                    </div>
 
-      </div>
+                                    <div class="inputs">
+                                        <p id="codigo_nome_p">Nome:</p>
+                                        <div class="input">
+                                            <img id="nome_func_img" src="/images/icon_theater.png" width="35px" />
+                                            <input @bind="@Input.Nome"id="nome_func" type="text" placeholder="Uci Cinemas" required/>
+                                        </div> 
+                                    </div>
 
-      <p id="codigo_cadastro_func_p">Cadastrar cinema</p>
+                                    <div class="inputs"> 
+                                        <p id="codigo_email_p">Número de Salas :</p>
+                                        <div class="input">
+                                            <img id="email_func_img" src="/images/icon_numsalas.png" width="35px" />
+                                            <input @bind="@Input.NumSala"id="email_func" type="text" placeholder="10" required/>
+                                        </div> 
+                                    </div>
 
+                                    <div class="inputs">
+                                        <p id="codigo_senha_p">Código do Cinema:</p>
+                                        <div class="input">
+                                            <img id="senha_func_img" src="/images/icon_chave.png" width="35px">
+                                            <input @bind="@Input.Codigocine" id="senha_func" type="text" placeholder="*******" required/>
+                                        </div>
+                                    </div>
 
-      <p id="codigo_func_p">Localidade:</p>
-      <p id="codigo_func_result"></p>
-      <input @bind="@Input.Localidade" id="codigo_func"  type="text" placeholder="Av. Guimarães, N°12">
-      <img id="codigo_func_img" src="/images/icon_local.png" width="35px" />
-
-      <p id="codigo_nome_p">Nome:</p>
-      <p id="codigo_nome_result"></p>
-      <input @bind="@Input.Nome"id="nome_func" type="text" placeholder="Uci Cinemas" />
-      <img id="nome_func_img" src="/images/icon_theater.png" width="35px" />
-
-      <p id="codigo_email_p">Número de Salas :</p>
-      <p id="codigo_email_result"></p>
-      <input @bind="@Input.NumSala"id="email_func" type="text" placeholder="10" />
-      <img id="email_func_img" src="/images/icon_numsalas.png" width="35px" />
-
-      <p id="codigo_senha_p">Senha:</p>
-      <p id="codigo_senha_result"></p>
-      <input @bind="@Input.Codigocine" id="senha_func" type="text" placeholder="*******" />
-      <img id="senha_func_img" src="/images/icon_chave.png" width="35px">
-
-
-      <input type="file" id="fileInput" style="display: none;" accept="image/*" />
-      <button id="choose_img" onclick="openFileExplorer()" style="background: none; border: none; cursor: pointer;">
-        <img src="/images/foto_cadastro_func.png" id="imagePreview" />
-      </button>
-
-      <button @onclick="Submit" id="cadastre_func">Cadastrar</button>
-    </div>
-  </div>
+                                    
+                                </div>
+                                <div class="form_btn">
+                                    <img src="/images/icon_identifica_func.png"/>
+                                    <button @onclick="Submit" id="cadastre_func">Cadastrar</button>
+                                </div>
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+  
 </div>
 @if (ShowMessage2)
 {
@@ -134,6 +155,15 @@
  </div>
  
 }
+
+@if (ObligationMessage){
+                
+                <div class="succes_message">
+                <button class="button_succes" @onclick="CloseWindow">x</button>
+                <img src="/images/sirene.png" width="80px">
+                <p>Preencha todos os campos!</p>
+                </div>
+            }
 </body>
 @code{
 
@@ -145,9 +175,23 @@
     public string Codigocine;
  
 }
-  bool ShowMessage = false;
+   bool ShowMessage = false;
    bool ShowMessage2 = false;
+   bool ObligationMessage = false;
+
+
   public async Task Submit(){
+
+    if (string.IsNullOrEmpty(Input.Localidade) || 
+        string.IsNullOrEmpty(Input.Nome) || 
+        string.IsNullOrEmpty(Input.NumSala) || 
+        string.IsNullOrEmpty(Input.Codigocine))
+    {
+            ObligationMessage = true;
+            return;
+    }
+
+
       Console.WriteLine("Test");
       var client = ClientFactory.CreateClient();
 
@@ -182,5 +226,10 @@
      Console.WriteLine($"Error: {errorMessage}");
  }
 }
+
+public void CloseWindow()
+   {
+       ObligationMessage = false;
+   }
 }
 
