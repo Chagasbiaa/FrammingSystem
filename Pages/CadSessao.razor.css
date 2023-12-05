@@ -24,6 +24,12 @@ body {
     
 }
 
+#button_theater_menu img,  #button_identificacao_menu img, #button_cliente_menu img{
+    width: 45px;
+    height: 45px;
+    opacity: 0.51; 
+}
+
 .succes_message p[b-s4wd7t5tht] {
     color: #252525;
     text-align: center;

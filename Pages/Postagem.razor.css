@@ -36,27 +36,29 @@ body {
 }
 
 .rotulos_usuarios{
-    width: 257px;
+    width: 319px;
     height: 630px;
-    background-color: #ccc;
+    background: #DDD;
     margin-top: -762px;
     position: absolute;
     margin-left: 310px;
     border-radius: 20px;
     color: #707070;
-    
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+     
 
 }
 
 .rotulos_usuarios p {
-    text-align: left;
+    width: 80%;
+    color: #181818;
     font-family: Poppins;
     font-size: 20px;
     font-style: normal;
-    display: inline-block;
-    font-weight: 600;
-    line-height: 118.5%;
-    padding: 6px;
+    font-weight: bolder;
+    text-align: left;
 }
 
 .critica h1{
@@ -783,7 +785,7 @@ body {
     border-radius: 50%;
     overflow: hidden;
     grid-column: 11;
-    margin-left: 29px;
+    margin-bottom: 20px;
 }
 
     #divBuscaPostagem {

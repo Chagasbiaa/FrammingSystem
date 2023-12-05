@@ -501,6 +501,12 @@ body {
     margin-top: 5px;
 }
 
+#button_theater_menu img,  #button_identificacao_menu img, #button_cliente_menu img{
+    width: 45px;
+    height: 45px;
+    opacity: 0.51; 
+}
+
     #cadastre_func:hover {
         background-color: #FF6666;
     }

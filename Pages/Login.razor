@@ -32,19 +32,19 @@
      <header class="account-section__header">
          <div class="header__account-div">
            <a href="/Login" rel="noreferrer" class="account-div__link">Login</a>
-           <a href="/Register" rel="noreferrer" class="account-div__link">Criar Conta</a>
          </div>
      </header>
     <EditForm Model="@this" OnValidSubmit="OnValidSubmit">
        <DataAnnotationsValidator />
        <ValidationSummary />
          <div class="form__input-div">
-           <label for="inputEmail" class="input-div__label">Email</label>
-           <InputText id="inputEmail" @bind-Value="user.Email" type="email" class="input-div__input" placeholder="example@email.com" />
+           <p class="input-div__label">Email</p>
+           <InputText id="inputEmail" @bind-Value="user.Email" type="email" class="input-div__input" placeholder="example@email.com" style="border: none; width:98%; background:none; outline:none;"/>
          </div>
+         <br>
          <div class="form__input-div">
            <label for="inputPassword" class="input-div__label">Senha</label>
-            <InputText id="inputPassword" @bind-Value="user.Password" type="password" class="input-div__input" placeholder="********" />
+            <InputText id="inputPassword" @bind-Value="user.Password" type="password" class="input-div__input" placeholder="********" style="border: none; width:98%; background:none; outline:none;"/>
            <label for="inputPassword" class="input-div__label-see-password"><img src="/images/see-password-icon.png" alt="See Password Icon" /></label>
          </div>
          <div class="form__password-info-div">

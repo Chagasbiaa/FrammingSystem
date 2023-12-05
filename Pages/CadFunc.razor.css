@@ -523,6 +523,11 @@ body {
     position: fixed;
 }
 
+#button_theater_menu img,  #button_identificacao_menu img, #button_cliente_menu img{
+    width: 45px;
+    height: 45px;
+    opacity: 0.51; 
+}
 
 
 

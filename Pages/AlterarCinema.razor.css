@@ -260,10 +260,10 @@ body {
     height: 40px;
 }
 
-    #button_theater_menu img {
+    #button_theater_menu img,  #button_identificacao_menu img, #button_cliente_menu img{
         width: 45px;
         height: 45px;
-        opacity: 0.51;
+        opacity: 0.51; 
     }
 
 .buttons_sair_configuracao {

@@ -26,6 +26,12 @@ body {
     margin-left: -90px;
 }
 
+#button_theater_menu img,  #button_identificacao_menu img, #button_cliente_menu img{
+    width: 45px;
+    height: 45px;
+    opacity: 0.51; 
+}
+
     #divBusca button {
         background: transparent;
         border: none;
@@ -614,6 +620,7 @@ body {
     color: #FFF;
     font-family: Poppins;
     font-size: 40px;
+    font-weight: bolder;
 }
 
 .introduction h3 {
@@ -621,13 +628,16 @@ body {
     font-family: Poppins;
     font-size: 20px;
     font-style: normal;
+
 }
 
 .calendar_container {
     width: 23%;
     height: 100%;
-    background: #FFF;
+
     border-radius: 25px;
+    display: grid;
+    place-items: center;
 }
 
 .container_both{
@@ -655,6 +665,10 @@ body {
     flex-direction: row;
     justify-content:space-evenly;
     align-items:center;
+}
+
+.container_user h1, .container_cinema h1{
+    font-weight: bolder;
 }
 
 .user span, .cinema span{
@@ -692,6 +706,11 @@ body {
     flex-direction: column;
     align-items: center;
     border-radius: 28px;
+}
+
+.manager_employee h1, .manager_publication h1{
+   font-weight: bolder;
+   margin-top: 40px;
 }
 
 .functions_main{
@@ -740,6 +759,8 @@ body {
     background: #F3AEAE;
     border-radius: 28px 6px 6px 28px;
     Overflow-y: auto;
+    display: grid;
+    place-items: center;
 }
 
 .favorite::-webkit-scrollbar {
@@ -921,7 +942,7 @@ body {
     }
 
     .svg-icon_arrow circle {
-        stroke: #0;
+        stroke: 0;
         stroke-width: 1;
     }
 
